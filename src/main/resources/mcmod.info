@@ -1,17 +1,17 @@
 [
 {
-  "modid": "SlimevoidLib",
-  "name": "Slimevoid Library",
-  "description": "An Open Source Mod Library of useful files",
+  "modid": "LittleBlocks",
+  "name": "Little Blocks",
+  "description": "The Little Blocks mod",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/SlimeVoid/SlimevoidLibrary",
+  "url": "https://github.com/SlimeVoid/LittleBlocks-FML",
   "updateUrl": "",
-  "credits": "ali4z, DV8FromTheWorld, allaryin, Slimevoid",
-  "authors": ["Eurymachus"],
-  "logoFile": "",
-  "screenshots": [],
+  "credits": "Eurymachus, Vengeurk, ali4z, Tarig0",
+  "authors": ["Slime Void Crew"],
+  "logoFile": "/littleblocks/logo.png",
+  "screenshots": [""],
   "parent":"",
-  "dependencies": []
+  "dependencies": ["SlimevoidLib"]
 }
 ]
