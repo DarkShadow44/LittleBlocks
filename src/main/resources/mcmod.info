@@ -1,21 +1,17 @@
+[
 {
-	"modListVersion": 2,
-	"modList": [{
-		"modid": "${modId}",
-		"name": "${modName}",
-		"description": "An example mod for Minecraft 1.7.10 with Forge focused on a stable setup.",
-		"version": "${modVersion}",
-		"mcversion": "${minecraftVersion}",
-		"url": "https://github.com/SinTh0r4s/MyMod",
-		"updateUrl": "",
-		"authorList": ["SinTho0r4s"],
-		"credits": "",
-		"logoFile": "",
-		"screenshots": [],
-		"parent": "",
-		"requiredMods": [],
-		"dependencies": [],
-		"dependants": [],
-		"useDependencyInformation": false
-	}]
+  "modid": "SlimevoidLib",
+  "name": "Slimevoid Library",
+  "description": "An Open Source Mod Library of useful files",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/SlimeVoid/SlimevoidLibrary",
+  "updateUrl": "",
+  "credits": "ali4z, DV8FromTheWorld, allaryin, Slimevoid",
+  "authors": ["Eurymachus"],
+  "logoFile": "",
+  "screenshots": [],
+  "parent":"",
+  "dependencies": []
 }
+]
