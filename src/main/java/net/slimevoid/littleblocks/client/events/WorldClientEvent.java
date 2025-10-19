@@ -9,6 +9,7 @@ import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 import net.slimevoid.littleblocks.world.LittleWorldClient;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -40,6 +41,13 @@ public class WorldClientEvent {
                         .getTerrainType()),
                 world.difficultySetting.getDifficultyId(),
                 null);
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        if (ConfigurationLib.littleWorldClient != null) {
+            ConfigurationLib.littleWorldClient.updateEntities();
         }
     }
 
