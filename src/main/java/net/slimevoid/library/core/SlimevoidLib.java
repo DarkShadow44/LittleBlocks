@@ -17,6 +17,7 @@ import net.slimevoid.library.core.lib.CoreLib;
 import net.slimevoid.library.util.helpers.SlimevoidHelper;
 import net.slimevoid.library.util.json.JSONLoader;
 import net.slimevoid.library.util.xml.XMLVariables;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.SidedProxy;
@@ -24,14 +25,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(
-        modid = CoreLib.MOD_ID,
-        name = CoreLib.MOD_NAME,
-        version = CoreLib.MOD_VERSION)
+@Mod(modid = CoreLib.MOD_ID, name = CoreLib.MOD_NAME, version = CoreLib.MOD_VERSION)
 public class SlimevoidLib {
-    @SidedProxy(
-            clientSide = CoreLib.MOD_CLIENT_PROXY,
-            serverSide = CoreLib.MOD_COMMON_PROXY)
+
+    @SidedProxy(clientSide = CoreLib.MOD_CLIENT_PROXY, serverSide = CoreLib.MOD_COMMON_PROXY)
     public static ICommonProxy proxy;
 
     @EventHandler

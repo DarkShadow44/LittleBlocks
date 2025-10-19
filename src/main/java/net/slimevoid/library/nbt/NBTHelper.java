@@ -11,15 +11,15 @@
  */
 package net.slimevoid.library.nbt;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
 import cpw.mods.fml.common.network.ByteBufUtils;
+import io.netty.buffer.ByteBuf;
 
 public class NBTHelper {
 
@@ -30,8 +30,7 @@ public class NBTHelper {
      * @param itemstack
      */
     public static void writeItemStack(ByteBuf data, ItemStack itemstack) {
-        ByteBufUtils.writeItemStack(data,
-                                    itemstack);
+        ByteBufUtils.writeItemStack(data, itemstack);
     }
 
     /**
@@ -64,8 +63,8 @@ public class NBTHelper {
         short stringLength = data.readShort();
 
         if (stringLength > allowedLength) {
-            throw new IOException("Received string length longer than maximum allowed ("
-                                  + stringLength + " > " + allowedLength + ")");
+            throw new IOException(
+                "Received string length longer than maximum allowed (" + stringLength + " > " + allowedLength + ")");
         } else if (stringLength < 0) {
             throw new IOException("Received string length is less than zero! Weird string!");
         } else {
@@ -83,8 +82,7 @@ public class NBTHelper {
      * Writes a compressed NBTTagCompound to the OutputStream
      */
     public static void writeNBTTagCompound(NBTTagCompound nbttagcompound, ByteBuf data) {
-        ByteBufUtils.writeTag(data,
-                              nbttagcompound);
+        ByteBufUtils.writeTag(data, nbttagcompound);
     }
 
     /**
@@ -102,8 +100,7 @@ public class NBTHelper {
         if (tag.hasKey(key)) {
             return tag.getInteger(key);
         } else {
-            tag.setInteger(key,
-                           defaultValue);
+            tag.setInteger(key, defaultValue);
         }
         itemstack.setTagCompound(tag);
         return tag.getInteger(key);

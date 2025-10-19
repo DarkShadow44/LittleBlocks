@@ -40,10 +40,7 @@ public class PacketLittleBlocksEvents extends PacketUpdate {
 
     public PacketLittleBlocksEvents(int x, int y, int z, int blockId, int type, int pitch) {
         this();
-        this.setPosition(x,
-                         y,
-                         z,
-                         0);
+        this.setPosition(x, y, z, 0);
         this.setInstrumentType(type);
         this.setPitch(pitch);
         this.setBlockId(blockId);
@@ -51,8 +48,7 @@ public class PacketLittleBlocksEvents extends PacketUpdate {
 
     /** 1=Double Bass, 2=Snare Drum, 3=Clicks / Sticks, 4=Bass Drum, 5=Harp */
     public void setInstrumentType(int type) {
-        this.payload.setIntPayload(0,
-                                   type);
+        this.payload.setIntPayload(0, type);
     }
 
     /**
@@ -60,14 +56,12 @@ public class PacketLittleBlocksEvents extends PacketUpdate {
      * 24 is the highest).
      */
     public void setPitch(int pitch) {
-        this.payload.setIntPayload(1,
-                                   pitch);
+        this.payload.setIntPayload(1, pitch);
     }
 
     /** The block ID this action is set for. */
     public void setBlockId(int blockId) {
-        this.payload.setIntPayload(2,
-                                   blockId);
+        this.payload.setIntPayload(2, blockId);
     }
 
     @Override

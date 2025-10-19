@@ -11,13 +11,13 @@
  */
 package net.slimevoid.library.network;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-
 import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * Packet for sending Entity information
@@ -28,6 +28,7 @@ import net.minecraft.world.World;
  * 
  */
 public abstract class PacketEntity extends PacketUpdate {
+
     private int entityId;
 
     public PacketEntity() {
@@ -47,7 +48,7 @@ public abstract class PacketEntity extends PacketUpdate {
      * Set the entityId for this packet
      * 
      * @param entityId
-     *            The entity ID
+     *                 The entity ID
      */
     public void setEntityId(int entityId) {
         this.entityId = entityId;
@@ -55,15 +56,13 @@ public abstract class PacketEntity extends PacketUpdate {
 
     @Override
     public void writeData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.writeData(ctx,
-                        data);
+        super.writeData(ctx, data);
         data.writeInt(this.entityId);
     }
 
     @Override
     public void readData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.readData(ctx,
-                       data);
+        super.readData(ctx, data);
         this.entityId = data.readInt();
     }
 

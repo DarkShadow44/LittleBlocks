@@ -13,16 +13,14 @@ public class XMLVariables {
         while (blocks.hasNext()) {
             Block block = blocks.next();
             if (block != null) {
-                XMLLoader.addXmlVariable("$" + block.getUnlocalizedName(),
-                                         Block.getIdFromBlock(block));
+                XMLLoader.addXmlVariable("$" + block.getUnlocalizedName(), Block.getIdFromBlock(block));
             }
         }
         Iterator<Item> items = Item.itemRegistry.iterator();
         while (items.hasNext()) {
             Item item = items.next();
             if (item != null && !(item instanceof ItemBlock)) {
-                XMLLoader.addXmlVariable("$" + item.getUnlocalizedName(),
-                                         Item.getIdFromItem(item));
+                XMLLoader.addXmlVariable("$" + item.getUnlocalizedName(), Item.getIdFromItem(item));
 
             }
         }

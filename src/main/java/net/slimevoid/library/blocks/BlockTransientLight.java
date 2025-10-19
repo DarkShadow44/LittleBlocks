@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public abstract class BlockTransientLight extends Block {
@@ -27,8 +28,8 @@ public abstract class BlockTransientLight extends Block {
     }
 
     @Override
-    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisalignedbb, List arraylist, Entity entity) {
-    }
+    public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB axisalignedbb, List arraylist,
+        Entity entity) {}
 
     @Override
     public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
@@ -53,11 +54,7 @@ public abstract class BlockTransientLight extends Block {
     @Override
     public void onBlockAdded(World world, int x, int y, int z) {
         if (!world.isRemote) {
-            world.scheduleBlockUpdate(x,
-                                      y,
-                                      z,
-                                      this,
-                                      tickRate(world));
+            world.scheduleBlockUpdate(x, y, z, this, tickRate(world));
         }
     }
 
@@ -69,20 +66,10 @@ public abstract class BlockTransientLight extends Block {
     @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
         if (!world.isRemote) {
-            if (!this.handleLightingConditions(world,
-                                               x,
-                                               y,
-                                               z,
-                                               random)) {
-                world.setBlockToAir(x,
-                                    y,
-                                    z);
+            if (!this.handleLightingConditions(world, x, y, z, random)) {
+                world.setBlockToAir(x, y, z);
             }
-            world.scheduleBlockUpdate(x,
-                                      y,
-                                      z,
-                                      this,
-                                      tickRate(world));
+            world.scheduleBlockUpdate(x, y, z, this, tickRate(world));
         }
     }
 
@@ -100,17 +87,8 @@ public abstract class BlockTransientLight extends Block {
 
     public static void setBlock(Block block, int x, int y, int z, World world) {
         if (!world.isRemote) {
-            if ((world.getBlock(x,
-                                y,
-                                z) == Blocks.air || world.getBlock(x,
-                                                                   y,
-                                                                   z) == block)) {
-                world.setBlock(x,
-                               y,
-                               z,
-                               block,
-                               0,
-                               2);
+            if ((world.getBlock(x, y, z) == Blocks.air || world.getBlock(x, y, z) == block)) {
+                world.setBlock(x, y, z, block, 0, 2);
             }
         }
     }

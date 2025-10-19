@@ -9,17 +9,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
-import net.slimevoid.library.core.SlimevoidCore;
 import net.slimevoid.littleblocks.api.ILBCommonProxy;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.blocks.events.LittleContainerInteract;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
-import net.slimevoid.littleblocks.core.lib.CoreLib;
 import net.slimevoid.littleblocks.core.lib.PacketLib;
 import net.slimevoid.littleblocks.events.LittleBlocksCollectionPickup;
 import net.slimevoid.littleblocks.events.LittleChunkEvent;
 import net.slimevoid.littleblocks.events.WorldServerEvent;
 import net.slimevoid.littleblocks.tickhandlers.LittleWorldServerTickHandler;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
@@ -41,12 +40,10 @@ public class CommonProxy implements ILBCommonProxy {
     }
 
     @Override
-    public void registerRenderInformation() {
-    }
+    public void registerRenderInformation() {}
 
     @Override
-    public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {
-    }
+    public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {}
 
     @Override
     public String getMinecraftDir() {
@@ -84,8 +81,9 @@ public class CommonProxy implements ILBCommonProxy {
             if (ConfigurationLib.littleWorldServer.containsKey(dimension)) {
                 World littleWorld = DimensionManager.getWorld(ConfigurationLib.littleWorldServer.get(dimension));
                 if (littleWorld == null) {
-                    throw new NullPointerException("A LittleWorld does not exist for reference world - "
-                                                   + world.getWorldInfo().getWorldName());
+                    throw new NullPointerException(
+                        "A LittleWorld does not exist for reference world - " + world.getWorldInfo()
+                            .getWorldName());
                 }
                 if (littleWorld instanceof ILittleWorld) {
                     return (ILittleWorld) littleWorld;
@@ -102,8 +100,8 @@ public class CommonProxy implements ILBCommonProxy {
 
     @Override
     public boolean isClient(World world) {
-        return FMLCommonHandler.instance().getSide() == Side.CLIENT
-               || (world != null && world.isRemote);
+        return FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT || (world != null && world.isRemote);
     }
 
     @Override

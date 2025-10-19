@@ -21,15 +21,13 @@ public abstract class PacketGuiEvent extends PacketUpdate {
 
     @Override
     public void writeData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.writeData(ctx,
-                        data);
+        super.writeData(ctx, data);
         data.writeInt(this.guiID);
     }
 
     @Override
     public void readData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.readData(ctx,
-                       data);
+        super.readData(ctx, data);
         this.guiID = data.readInt();
     }
 

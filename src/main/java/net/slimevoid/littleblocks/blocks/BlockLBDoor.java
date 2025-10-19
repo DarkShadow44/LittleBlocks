@@ -14,17 +14,8 @@ public class BlockLBDoor extends BlockDoor {
 
     @Override
     public boolean canPlaceBlockAt(World world, int x, int y, int z) {
-        return y >= world.getHeight() ? false : World.doesBlockHaveSolidTopSurface(world,
-                                                                                   x,
-                                                                                   y - 1,
-                                                                                   z)
-                                                && Blocks.bedrock.canPlaceBlockAt(world,
-                                                                                  x,
-                                                                                  y,
-                                                                                  z)
-                                                && Blocks.bedrock.canPlaceBlockAt(world,
-                                                                                  x,
-                                                                                  y + 1,
-                                                                                  z);
+        return y >= world.getHeight() ? false
+            : World.doesBlockHaveSolidTopSurface(world, x, y - 1, z) && Blocks.bedrock.canPlaceBlockAt(world, x, y, z)
+                && Blocks.bedrock.canPlaceBlockAt(world, x, y + 1, z);
     }
 }

@@ -12,8 +12,7 @@ public class ClientPacketLittleBlocksLoginExecutor implements IPacketExecutor {
 
     @Override
     public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
-        if (packet instanceof PacketLittleBlocksSettings
-            && packet.getCommand() == CommandLib.SETTINGS) {
+        if (packet instanceof PacketLittleBlocksSettings && packet.getCommand() == CommandLib.SETTINGS) {
             ConfigurationLib.littleBlocksClip = ((PacketLittleBlocksSettings) packet).getClipMode();
         }
     }

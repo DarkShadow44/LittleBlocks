@@ -24,6 +24,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public abstract class XMLLoader {
+
     /**
      * Variable mapping.
      */
@@ -32,13 +33,14 @@ public abstract class XMLLoader {
     /**
      * Filename filter. Used for filtering out other files than XML files.
      */
-    protected static FilenameFilter       filter       = new FilenameFilter() {
-                                                           @Override
-                                                           public boolean accept(File dir, String name) {
-                                                               return name.substring(name.length() - 4,
-                                                                                     name.length()).equals(".xml");
-                                                           }
-                                                       };
+    protected static FilenameFilter filter = new FilenameFilter() {
+
+        @Override
+        public boolean accept(File dir, String name) {
+            return name.substring(name.length() - 4, name.length())
+                .equals(".xml");
+        }
+    };
 
     private static int getInteger(String value) {
         int returns;
@@ -70,18 +72,14 @@ public abstract class XMLLoader {
                 }
             }
         }
-        Integer flag = xmlVariables.put(var,
-                                        val);
+        Integer flag = xmlVariables.put(var, val);
 
         if (flag != null) {
-            SlimevoidCore.console(CoreLib.MOD_ID,
-                                  "XML Variable replaced ID [" + flag
-                                          + "] with ID [" + val
-                                          + "] and mapped to " + var);
+            SlimevoidCore.console(
+                CoreLib.MOD_ID,
+                "XML Variable replaced ID [" + flag + "] with ID [" + val + "] and mapped to " + var);
         } else {
-            SlimevoidCore.console(CoreLib.MOD_ID,
-                                  "XML Variable loaded for [" + var + "] @ID ["
-                                          + val + "]");
+            SlimevoidCore.console(CoreLib.MOD_ID, "XML Variable loaded for [" + var + "] @ID [" + val + "]");
         }
     }
 
@@ -89,13 +87,15 @@ public abstract class XMLLoader {
      * Fetches a value with set tag from a element node.
      * 
      * @param tag
-     *            Tag name.
+     *                Tag name.
      * @param element
-     *            Element node.
+     *                Element node.
      * @return The tag's value.
      */
     protected static String getValue(String tag, Element element) {
-        NodeList nodes = element.getElementsByTagName(tag).item(0).getChildNodes();
+        NodeList nodes = element.getElementsByTagName(tag)
+            .item(0)
+            .getChildNodes();
         Node node = nodes.item(0);
         return node.getNodeValue();
     }

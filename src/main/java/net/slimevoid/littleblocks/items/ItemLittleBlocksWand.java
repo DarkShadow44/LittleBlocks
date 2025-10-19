@@ -9,6 +9,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.slimevoid.littleblocks.core.lib.IconLib;
 import net.slimevoid.littleblocks.items.wand.EnumWandAction;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -38,28 +39,17 @@ public class ItemLittleBlocksWand extends Item {
         return true;
     }
 
-    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side,
+        float hitX, float hitY, float hitZ) {
         return true;
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-        if (entityplayer.canPlayerEdit(x,
-                                       y,
-                                       z,
-                                       side,
-                                       itemstack)) {
+    public boolean onItemUseFirst(ItemStack itemstack, EntityPlayer entityplayer, World world, int x, int y, int z,
+        int side, float hitX, float hitY, float hitZ) {
+        if (entityplayer.canPlayerEdit(x, y, z, side, itemstack)) {
             if (!world.isRemote) {
-                return EnumWandAction.doWandAction(itemstack,
-                                                   entityplayer,
-                                                   world,
-                                                   x,
-                                                   y,
-                                                   z,
-                                                   side,
-                                                   hitX,
-                                                   hitY,
-                                                   hitZ);
+                return EnumWandAction.doWandAction(itemstack, entityplayer, world, x, y, z, side, hitX, hitY, hitZ);
             }
         }
         return false;

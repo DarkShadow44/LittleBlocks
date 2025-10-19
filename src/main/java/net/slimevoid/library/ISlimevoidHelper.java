@@ -24,13 +24,13 @@ public interface ISlimevoidHelper {
      * Gets the block from location
      * 
      * @param world
-     *            the world of the target
+     *              the world of the target
      * @param x
-     *            the xCoord
+     *              the xCoord
      * @param y
-     *            the yCoord
+     *              the yCoord
      * @param z
-     *            the zCoord
+     *              the zCoord
      * @return the block
      */
     public Block getBlock(World world, int x, int y, int z);
@@ -39,13 +39,13 @@ public interface ISlimevoidHelper {
      * Gets the tile entity for the block
      * 
      * @param world
-     *            the world of the target
+     *              the world of the target
      * @param x
-     *            the xCoord
+     *              the xCoord
      * @param y
-     *            the yCoord
+     *              the yCoord
      * @param z
-     *            the zCoord
+     *              the zCoord
      * @return a tile entity
      */
     public TileEntity getBlockTileEntity(IBlockAccess world, int x, int y, int z);
@@ -54,13 +54,13 @@ public interface ISlimevoidHelper {
      * Checks if the target exists within the worldObj of the target
      * 
      * @param world
-     *            the world of the target
+     *              the world of the target
      * @param x
-     *            the xCoord
+     *              the xCoord
      * @param y
-     *            the yCoord
+     *              the yCoord
      * @param z
-     *            the zCoord
+     *              the zCoord
      * @return if block exists
      */
     public boolean targetExists(World world, int x, int y, int z);
@@ -70,28 +70,29 @@ public interface ISlimevoidHelper {
      * Helps get the usable by player for Containers
      * 
      * @param world
-     *            NOT player.worldObj world of the object e.g.
-     *            tileentity.worldObj
+     *                 NOT player.worldObj world of the object e.g.
+     *                 tileentity.worldObj
      * @param player
-     *            the player attempting to use the block
+     *                 the player attempting to use the block
      * @param xCoord
-     *            the xCoord of the object
+     *                 the xCoord of the object
      * @param yCoord
-     *            the yCoord of the object
+     *                 the yCoord of the object
      * @param zCoord
-     *            the zCoord of the object
+     *                 the zCoord of the object
      * @param xDiff
-     *            the x differential (0.5D)
+     *                 the x differential (0.5D)
      * @param yDiff
-     *            the y differential (0.5D)
+     *                 the y differential (0.5D)
      * @param zDiff
-     *            the z differential (0.5D)
+     *                 the z differential (0.5D)
      * @param distance
-     *            the distance from object (64.0D)
+     *                 the distance from object (64.0D)
      * 
      * @return whether the Player can use the object
      */
-    public boolean isUseableByPlayer(World world, EntityPlayer player, int xCoord, int yCoord, int zCoord, double xDiff, double yDiff, double zDiff, double distance);
+    public boolean isUseableByPlayer(World world, EntityPlayer player, int xCoord, int yCoord, int zCoord, double xDiff,
+        double yDiff, double zDiff, double distance);
 
     /**
      * Overridden to return a readable name string

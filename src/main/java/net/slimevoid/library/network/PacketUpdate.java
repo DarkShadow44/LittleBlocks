@@ -1,9 +1,10 @@
 package net.slimevoid.library.network;
 
+import net.minecraft.world.World;
+
+import cpw.mods.fml.common.network.ByteBufUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.world.World;
-import cpw.mods.fml.common.network.ByteBufUtils;
 
 /**
  * Packet Information for Reading/Writing packet data
@@ -20,18 +21,19 @@ import cpw.mods.fml.common.network.ByteBufUtils;
  * 
  */
 public abstract class PacketUpdate extends EurysPacket {
+
     public PacketPayload payload;
 
-    public int           xPosition;
-    public int           yPosition;
-    public int           zPosition;
-    public int           side;
+    public int xPosition;
+    public int yPosition;
+    public int zPosition;
+    public int side;
 
-    public float         hitX;
-    public float         hitY;
-    public float         hitZ;
+    public float hitX;
+    public float hitY;
+    public float hitZ;
 
-    public String        command;
+    public String command;
 
     public PacketUpdate(int packetId) {
         this.setPacketId(packetId);
@@ -46,13 +48,13 @@ public abstract class PacketUpdate extends EurysPacket {
      * Set the position x, y, z and side if applicable
      * 
      * @param x
-     *            The x position
+     *             The x position
      * @param y
-     *            The y position
+     *             The y position
      * @param z
-     *            The z position
+     *             The z position
      * @param side
-     *            The side (if applicable)
+     *             The side (if applicable)
      */
     public void setPosition(int x, int y, int z, int side) {
         this.xPosition = x;
@@ -65,11 +67,11 @@ public abstract class PacketUpdate extends EurysPacket {
      * Set the selected vector positions (if applicable)
      * 
      * @param hitX
-     *            The selected vector on x
+     *             The selected vector on x
      * @param hitY
-     *            The selected vector on y
+     *             The selected vector on y
      * @param hitZ
-     *            The selected vector on z
+     *             The selected vector on z
      */
     public void setHitVectors(float hitX, float hitY, float hitZ) {
         this.hitX = hitX;
@@ -89,8 +91,7 @@ public abstract class PacketUpdate extends EurysPacket {
     public void writeData(ChannelHandlerContext ctx, ByteBuf data) {
         data.writeByte(this.getPacketId());
 
-        ByteBufUtils.writeUTF8String(data,
-                                     this.getCommand());
+        ByteBufUtils.writeUTF8String(data, this.getCommand());
 
         data.writeInt(this.xPosition);
         data.writeInt(this.yPosition);
@@ -120,17 +121,12 @@ public abstract class PacketUpdate extends EurysPacket {
         data.writeInt(this.payload.getBoolSize());
         data.writeInt(this.payload.getDoubleSize());
 
-        for (int i = 0; i < this.payload.getIntSize(); i++)
-            data.writeInt(this.payload.getIntPayload(i));
-        for (int i = 0; i < this.payload.getFloatSize(); i++)
-            data.writeFloat(this.payload.getFloatPayload(i));
+        for (int i = 0; i < this.payload.getIntSize(); i++) data.writeInt(this.payload.getIntPayload(i));
+        for (int i = 0; i < this.payload.getFloatSize(); i++) data.writeFloat(this.payload.getFloatPayload(i));
         for (int i = 0; i < this.payload.getStringSize(); i++)
-            ByteBufUtils.writeUTF8String(data,
-                                         this.payload.getStringPayload(i));
-        for (int i = 0; i < this.payload.getBoolSize(); i++)
-            data.writeBoolean(this.payload.getBoolPayload(i));
-        for (int i = 0; i < this.payload.getDoubleSize(); i++)
-            data.writeDouble(this.payload.getDoublePayload(i));
+            ByteBufUtils.writeUTF8String(data, this.payload.getStringPayload(i));
+        for (int i = 0; i < this.payload.getBoolSize(); i++) data.writeBoolean(this.payload.getBoolPayload(i));
+        for (int i = 0; i < this.payload.getDoubleSize(); i++) data.writeDouble(this.payload.getDoublePayload(i));
     }
 
     @Override
@@ -139,13 +135,8 @@ public abstract class PacketUpdate extends EurysPacket {
 
         this.setCommand(ByteBufUtils.readUTF8String(data));
 
-        this.setPosition(data.readInt(),
-                         data.readInt(),
-                         data.readInt(),
-                         data.readInt());
-        this.setHitVectors(data.readFloat(),
-                           data.readFloat(),
-                           data.readFloat());
+        this.setPosition(data.readInt(), data.readInt(), data.readInt(), data.readInt());
+        this.setHitVectors(data.readFloat(), data.readFloat(), data.readFloat());
 
         int intSize = data.readInt();
         int floatSize = data.readInt();
@@ -155,21 +146,12 @@ public abstract class PacketUpdate extends EurysPacket {
 
         this.payload = new PacketPayload(intSize, floatSize, stringSize, boolSize, doubleSize);
 
-        for (int i = 0; i < this.payload.getIntSize(); i++)
-            this.payload.setIntPayload(i,
-                                       data.readInt());
-        for (int i = 0; i < this.payload.getFloatSize(); i++)
-            this.payload.setFloatPayload(i,
-                                         data.readFloat());
+        for (int i = 0; i < this.payload.getIntSize(); i++) this.payload.setIntPayload(i, data.readInt());
+        for (int i = 0; i < this.payload.getFloatSize(); i++) this.payload.setFloatPayload(i, data.readFloat());
         for (int i = 0; i < this.payload.getStringSize(); i++)
-            this.payload.setStringPayload(i,
-                                          ByteBufUtils.readUTF8String(data));
-        for (int i = 0; i < this.payload.getBoolSize(); i++)
-            this.payload.setBoolPayload(i,
-                                        data.readBoolean());
-        for (int i = 0; i < this.payload.getDoubleSize(); i++)
-            this.payload.setDoublePayload(i,
-                                          data.readDouble());
+            this.payload.setStringPayload(i, ByteBufUtils.readUTF8String(data));
+        for (int i = 0; i < this.payload.getBoolSize(); i++) this.payload.setBoolPayload(i, data.readBoolean());
+        for (int i = 0; i < this.payload.getDoubleSize(); i++) this.payload.setDoublePayload(i, data.readDouble());
     }
 
     public boolean targetExists(World world) {

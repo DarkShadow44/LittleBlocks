@@ -1,8 +1,5 @@
 package net.slimevoid.littleblocks.network.packets;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-
 import java.util.HashMap;
 
 import net.minecraft.item.Item;
@@ -14,7 +11,11 @@ import net.slimevoid.littleblocks.core.lib.CommandLib;
 import net.slimevoid.littleblocks.core.lib.CoreLib;
 import net.slimevoid.littleblocks.items.EntityItemLittleBlocksCollection;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
 public class PacketLittleBlocksCollection extends PacketEntity {
+
     public HashMap<Item, ItemStack> itemstackCollection = new HashMap<Item, ItemStack>();
 
     public PacketLittleBlocksCollection() {
@@ -24,10 +25,7 @@ public class PacketLittleBlocksCollection extends PacketEntity {
 
     public PacketLittleBlocksCollection(EntityItemLittleBlocksCollection entitylb) {
         this();
-        this.setPosition((int) entitylb.posX,
-                         (int) entitylb.posY,
-                         (int) entitylb.posZ,
-                         0);
+        this.setPosition((int) entitylb.posX, (int) entitylb.posY, (int) entitylb.posZ, 0);
         this.setEntityId(entitylb.getEntityId());
         this.setCommand(CommandLib.ENTITY_COLLECTION);
         this.itemstackCollection = entitylb.getCollection();
@@ -35,8 +33,7 @@ public class PacketLittleBlocksCollection extends PacketEntity {
 
     @Override
     public void readData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.readData(ctx,
-                       data);
+        super.readData(ctx, data);
         int stacks = data.readInt();
         for (int i = 0; i < stacks; i++) {
             this.addItemToDrop(ItemStack.loadItemStackFromNBT(NBTHelper.readNBTTagCompound(data)));
@@ -45,13 +42,11 @@ public class PacketLittleBlocksCollection extends PacketEntity {
 
     @Override
     public void writeData(ChannelHandlerContext ctx, ByteBuf data) {
-        super.writeData(ctx,
-                        data);
+        super.writeData(ctx, data);
         data.writeInt(itemstackCollection.size());
         for (ItemStack itemstack : itemstackCollection.values()) {
             NBTTagCompound nbttagcompound = new NBTTagCompound();
-            NBTHelper.writeNBTTagCompound(itemstack.writeToNBT(nbttagcompound),
-                                          data);
+            NBTHelper.writeNBTTagCompound(itemstack.writeToNBT(nbttagcompound), data);
         }
     }
 
@@ -59,8 +54,7 @@ public class PacketLittleBlocksCollection extends PacketEntity {
         if (itemstackCollection.containsKey(itemstack.getItem())) {
             itemstackCollection.get(itemstack.getItem()).stackSize++;
         } else {
-            itemstackCollection.put(itemstack.getItem(),
-                                    itemstack);
+            itemstackCollection.put(itemstack.getItem(), itemstack);
         }
     }
 }

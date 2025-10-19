@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import net.slimevoid.library.core.SlimevoidLib;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
@@ -27,9 +28,10 @@ import cpw.mods.fml.relauncher.Side;
  * @author ali4z
  */
 public abstract class Logger {
-    protected String       name;
+
+    protected String name;
     protected LoggerWriter writer;
-    protected LogLevel     filterLevel;
+    protected LogLevel filterLevel;
 
     /**
      * Log level.<br>
@@ -63,7 +65,7 @@ public abstract class Logger {
      * "DEBUG","INFO","WARNING","ERROR" are valid strings.
      * 
      * @param f
-     *            log level string
+     *          log level string
      * @return true if string valid was valid. Defaults to INFO if not.
      */
     public boolean setFilterLevel(String f) {
@@ -117,23 +119,23 @@ public abstract class Logger {
                 throw new Exception();
             } catch (Exception e) {
                 StackTraceElement[] c = e.getStackTrace();
-                int min = Math.min(3,
-                                   c.length - 1);
+                int min = Math.min(3, c.length - 1);
                 for (int i = min; i >= 1; i--) {
-                    trace.append(filterClassName(c[i].getClassName()) + "."
-                                 + c[i].getMethodName());
+                    trace.append(filterClassName(c[i].getClassName()) + "." + c[i].getMethodName());
                     if (i > 1) trace.append("->");
                 }
             }
-            writer.write(lvl.name() + ":" + getSide(isRemote) + ":" + name
-                         + ":" + msg + ":" + trace);
+            writer.write(lvl.name() + ":" + getSide(isRemote) + ":" + name + ":" + msg + ":" + trace);
         }
     }
 
     private String getSide(boolean isRemote) {
-        if (!isRemote && FMLCommonHandler.instance().getSide() == Side.CLIENT) return "ISERVER";
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) return "CLIENT";
-        if (FMLCommonHandler.instance().getSide() == Side.SERVER) return "SERVER";
+        if (!isRemote && FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) return "ISERVER";
+        if (FMLCommonHandler.instance()
+            .getSide() == Side.CLIENT) return "CLIENT";
+        if (FMLCommonHandler.instance()
+            .getSide() == Side.SERVER) return "SERVER";
 
         return "UNKNOWN";
     }
@@ -142,15 +144,14 @@ public abstract class Logger {
      * Write an exception stack trace to the logger.
      * 
      * @param e
-     *            exception
+     *          exception
      */
     public void writeStackTrace(Exception e) {
         if (writer == null) writer = new LoggerWriter(this.getLoggerName());
 
         writer.writeStackTrace(e);
-        FMLCommonHandler.instance().raiseException(e,
-                                                   e.getMessage(),
-                                                   false);
+        FMLCommonHandler.instance()
+            .raiseException(e, e.getMessage(), false);
     }
 
     /**
@@ -159,14 +160,14 @@ public abstract class Logger {
      * @author ali4z
      */
     private class LoggerWriter {
-        private File        file;
-        private FileWriter  fstream;
+
+        private File file;
+        private FileWriter fstream;
         private PrintWriter out;
 
         public LoggerWriter(String modName) {
             try {
-                String fileName = SlimevoidLib.proxy.getMinecraftDir()
-                                  + File.separator + modName + ".log";
+                String fileName = SlimevoidLib.proxy.getMinecraftDir() + File.separator + modName + ".log";
                 System.out.println(fileName);
                 file = new File(fileName);
                 fstream = new FileWriter(file);
@@ -205,7 +206,7 @@ public abstract class Logger {
      * Returns the string beyond the last period ".".
      * 
      * @param name
-     *            class name
+     *             class name
      * @return Filtered class name.
      */
 

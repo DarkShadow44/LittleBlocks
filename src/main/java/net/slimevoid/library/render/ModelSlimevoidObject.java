@@ -21,14 +21,15 @@ import net.minecraft.client.model.TexturedQuad;
 import net.minecraft.client.renderer.Tessellator;
 
 public class ModelSlimevoidObject {
-    private List<TexturedQuad>          faceList;
+
+    private List<TexturedQuad> faceList;
     private List<PositionTextureVertex> vertexList;
-    private List<Point2D.Float>         vertexTexList;
-    private ModelRenderer               modelRenderer;
+    private List<Point2D.Float> vertexTexList;
+    private ModelRenderer modelRenderer;
 
-    private ModelSlimevoidObjectBounds  boundsCache;
+    private ModelSlimevoidObjectBounds boundsCache;
 
-    private int                         polyCount = 0;
+    private int polyCount = 0;
 
     public ModelSlimevoidObject(ModelRenderer modelRenderer) {
         faceList = new ArrayList<TexturedQuad>();
@@ -54,16 +55,24 @@ public class ModelSlimevoidObject {
     }
 
     public void addQuad(int a, int b, int c, int d, int at, int bt, int ct, int dt, boolean flip) {
-        PositionTextureVertex ap = new PositionTextureVertex(vertexList.get(a).vector3D, vertexTexList.get(at).x, vertexTexList.get(at).y);
-        PositionTextureVertex bp = new PositionTextureVertex(vertexList.get(b).vector3D, vertexTexList.get(bt).x, vertexTexList.get(bt).y);
-        PositionTextureVertex cp = new PositionTextureVertex(vertexList.get(c).vector3D, vertexTexList.get(ct).x, vertexTexList.get(ct).y);
-        PositionTextureVertex dp = new PositionTextureVertex(vertexList.get(d).vector3D, vertexTexList.get(dt).x, vertexTexList.get(dt).y);
+        PositionTextureVertex ap = new PositionTextureVertex(
+            vertexList.get(a).vector3D,
+            vertexTexList.get(at).x,
+            vertexTexList.get(at).y);
+        PositionTextureVertex bp = new PositionTextureVertex(
+            vertexList.get(b).vector3D,
+            vertexTexList.get(bt).x,
+            vertexTexList.get(bt).y);
+        PositionTextureVertex cp = new PositionTextureVertex(
+            vertexList.get(c).vector3D,
+            vertexTexList.get(ct).x,
+            vertexTexList.get(ct).y);
+        PositionTextureVertex dp = new PositionTextureVertex(
+            vertexList.get(d).vector3D,
+            vertexTexList.get(dt).x,
+            vertexTexList.get(dt).y);
 
-        TexturedQuad quad = new TexturedQuad(new PositionTextureVertex[] {
-                ap,
-                bp,
-                cp,
-                dp });
+        TexturedQuad quad = new TexturedQuad(new PositionTextureVertex[] { ap, bp, cp, dp });
 
         if (flip) quad.flipFace();
         faceList.add(quad);
@@ -72,14 +81,20 @@ public class ModelSlimevoidObject {
     }
 
     public void addTriangle(int a, int b, int c, int at, int bt, int ct, boolean flip) {
-        PositionTextureVertex ap = new PositionTextureVertex(vertexList.get(a).vector3D, vertexTexList.get(at).x, vertexTexList.get(at).y);
-        PositionTextureVertex bp = new PositionTextureVertex(vertexList.get(b).vector3D, vertexTexList.get(bt).x, vertexTexList.get(bt).y);
-        PositionTextureVertex cp = new PositionTextureVertex(vertexList.get(c).vector3D, vertexTexList.get(ct).x, vertexTexList.get(ct).y);
+        PositionTextureVertex ap = new PositionTextureVertex(
+            vertexList.get(a).vector3D,
+            vertexTexList.get(at).x,
+            vertexTexList.get(at).y);
+        PositionTextureVertex bp = new PositionTextureVertex(
+            vertexList.get(b).vector3D,
+            vertexTexList.get(bt).x,
+            vertexTexList.get(bt).y);
+        PositionTextureVertex cp = new PositionTextureVertex(
+            vertexList.get(c).vector3D,
+            vertexTexList.get(ct).x,
+            vertexTexList.get(ct).y);
 
-        TexturedTriangle triangle = new TexturedTriangle(new PositionTextureVertex[] {
-                ap,
-                bp,
-                cp });
+        TexturedTriangle triangle = new TexturedTriangle(new PositionTextureVertex[] { ap, bp, cp });
 
         if (flip) triangle.flipFace();
         faceList.add(triangle);
@@ -98,11 +113,9 @@ public class ModelSlimevoidObject {
         int maxZ = 0;
 
         for (PositionTextureVertex v : vertexList) {
-            if (v.vector3D.xCoord < minX
-                || (minX == 0 && v.vector3D.xCoord != 0)) minX = (int) v.vector3D.xCoord;
+            if (v.vector3D.xCoord < minX || (minX == 0 && v.vector3D.xCoord != 0)) minX = (int) v.vector3D.xCoord;
             if (v.vector3D.yCoord < minY) minY = (int) v.vector3D.yCoord;
-            if (v.vector3D.zCoord < minZ
-                || (minZ == 0 && v.vector3D.zCoord != 0)) minZ = (int) v.vector3D.zCoord;
+            if (v.vector3D.zCoord < minZ || (minZ == 0 && v.vector3D.zCoord != 0)) minZ = (int) v.vector3D.zCoord;
 
             if (v.vector3D.xCoord > maxX) maxX = (int) v.vector3D.xCoord;
             if (v.vector3D.yCoord > maxY) maxY = (int) v.vector3D.yCoord;
@@ -115,8 +128,8 @@ public class ModelSlimevoidObject {
 
     public void render(float par2) {
         for (int i = 0; i < faceList.size(); i++) {
-            faceList.get(i).draw(Tessellator.instance,
-                                 par2);
+            faceList.get(i)
+                .draw(Tessellator.instance, par2);
         }
     }
 
@@ -133,6 +146,7 @@ public class ModelSlimevoidObject {
     }
 
     public class ModelSlimevoidObjectBounds {
+
         public int minX = 0;
         public int minY = 0;
         public int minZ = 0;

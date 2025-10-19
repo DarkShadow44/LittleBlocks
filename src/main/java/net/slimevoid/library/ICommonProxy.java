@@ -16,6 +16,7 @@ import java.io.File;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public interface ICommonProxy extends IGuiHandler {
@@ -66,7 +67,7 @@ public interface ICommonProxy extends IGuiHandler {
      * Register tileentity renderer (Client only)
      * 
      * @param clazz
-     *            the TileEntity class to register for
+     *              the TileEntity class to register for
      */
     public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz);
 

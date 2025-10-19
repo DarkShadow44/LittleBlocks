@@ -26,7 +26,8 @@ import net.slimevoid.library.core.lib.CoreLib;
 public class FileReader {
 
     public static String readFile(String file) {
-        InputStream is = FileReader.class.getClassLoader().getResourceAsStream(file);
+        InputStream is = FileReader.class.getClassLoader()
+            .getResourceAsStream(file);
         return getStringFromInputStream(is);
     }
 
@@ -65,9 +66,9 @@ public class FileReader {
      * Checks if a file exists in a directory.
      * 
      * @param filename
-     *            The filename.
+     *                 The filename.
      * @param dir
-     *            The directory.
+     *                 The directory.
      * @return True if file exists in directory, false otherwise.
      */
     public static boolean checkIfExists(String filename, File dir) {
@@ -78,15 +79,14 @@ public class FileReader {
      * Copies a file to a directory.
      * 
      * @param from
-     *            Source file.
+     *              Source file.
      * @param toDir
-     *            Destination directory.
+     *              Destination directory.
      * 
      * @throws IOException
      */
     public static void copyDefaultTo(File from, File toDir) throws IOException {
-        sendMessage("Copying from default: " + from.getName() + "->"
-                    + toDir.getAbsolutePath());
+        sendMessage("Copying from default: " + from.getName() + "->" + toDir.getAbsolutePath());
 
         // Initialize destination file.
         File to = new File(toDir.getPath() + File.separator + from.getName());
@@ -103,9 +103,7 @@ public class FileReader {
             destination = new FileOutputStream(to).getChannel();
             // Copy over entire content from source channel to destination
             // channel.
-            destination.transferFrom(source,
-                                     0,
-                                     source.size());
+            destination.transferFrom(source, 0, source.size());
         } finally {
             // Close the channels when finished.
             if (source != null) source.close();
@@ -117,21 +115,19 @@ public class FileReader {
      * Send a info message, logger or console.
      * 
      * @param error
-     *            The message.
+     *              The message.
      */
     public static void sendMessage(String message) {
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              message);
+        SlimevoidCore.console(CoreLib.MOD_ID, message);
     }
 
     /**
      * Send a error message, logger or console.
      * 
      * @param error
-     *            The message.
+     *              The message.
      */
     public static void endWithError(String error) {
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              error);
+        SlimevoidCore.console(CoreLib.MOD_ID, error);
     }
 }

@@ -15,7 +15,7 @@ import cpw.mods.fml.common.FMLLog;
 public class ItemBlockBase extends ItemBlock {
 
     protected HashMap<Integer, String> itemBlockNames;
-    private ArrayList<Integer>       validItemBlocks;
+    private ArrayList<Integer> validItemBlocks;
 
     public ItemBlockBase(Block block) {
         super(block);
@@ -31,9 +31,9 @@ public class ItemBlockBase extends ItemBlock {
     }
 
     public void setMetaName(int damage, String name) {
-        this.itemBlockNames.put(Integer.valueOf(damage),
-                                name);
-        this.getValidItemBlocks().add(Integer.valueOf(damage));
+        this.itemBlockNames.put(Integer.valueOf(damage), name);
+        this.getValidItemBlocks()
+            .add(Integer.valueOf(damage));
     }
 
     @Override
@@ -48,7 +48,8 @@ public class ItemBlockBase extends ItemBlock {
 
     @Override
     public void getSubItems(Item item, CreativeTabs tab, List list) {
-        for (int i = 0; i < this.getValidItemBlocks().size(); i++) {
+        for (int i = 0; i < this.getValidItemBlocks()
+            .size(); i++) {
             list.add(new ItemStack(item, 1, i));
         }
     }

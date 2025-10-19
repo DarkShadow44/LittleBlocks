@@ -11,6 +11,7 @@ import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.CoreLib;
 import net.slimevoid.littleblocks.tileentities.TileEntityLittleChunk;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class LittleChunkEvent {
@@ -22,10 +23,11 @@ public class LittleChunkEvent {
             TileEntity tileentity = (TileEntity) obj;
             if (tileentity instanceof TileEntityLittleChunk) {
                 ChunkPosition chunkpos = new ChunkPosition(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);
-                this.setActiveChunkPosition(event.world, LittleBlocks.proxy.getLittleWorld(event.world,
-                                                                              false),
-                                            chunkpos,
-                                            true);
+                this.setActiveChunkPosition(
+                    event.world,
+                    LittleBlocks.proxy.getLittleWorld(event.world, false),
+                    chunkpos,
+                    true);
             }
         }
     }
@@ -37,23 +39,25 @@ public class LittleChunkEvent {
             TileEntity tileentity = (TileEntity) obj;
             if (tileentity instanceof TileEntityLittleChunk) {
                 ChunkPosition chunkpos = new ChunkPosition(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord);
-                this.setActiveChunkPosition(event.world, LittleBlocks.proxy.getLittleWorld(event.world,
-                                                                              false),
-                                            chunkpos,
-                                            false);
+                this.setActiveChunkPosition(
+                    event.world,
+                    LittleBlocks.proxy.getLittleWorld(event.world, false),
+                    chunkpos,
+                    false);
             }
         }
     }
 
-    private void setActiveChunkPosition(World referenceWorld, ILittleWorld littleworld, ChunkPosition chunkposition, boolean forced) {
+    private void setActiveChunkPosition(World referenceWorld, ILittleWorld littleworld, ChunkPosition chunkposition,
+        boolean forced) {
         if (littleworld != null) {
-            littleworld.activeChunkPosition(chunkposition,
-                                            forced);
+            littleworld.activeChunkPosition(chunkposition, forced);
         } else {
-            SlimevoidCore.console(CoreLib.MOD_ID,
-                                  "Could not load a little chunk within ["
-                                          + referenceWorld != null ? referenceWorld.getWorldInfo().getWorldName() : "Unknown Dimension" + "]",
-                                  2);
+            SlimevoidCore.console(
+                CoreLib.MOD_ID,
+                "Could not load a little chunk within [" + referenceWorld != null ? referenceWorld.getWorldInfo()
+                    .getWorldName() : "Unknown Dimension" + "]",
+                2);
         }
     }
 

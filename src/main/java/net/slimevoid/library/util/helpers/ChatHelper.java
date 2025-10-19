@@ -11,9 +11,9 @@ import net.minecraft.world.World;
 public class ChatHelper {
 
     private static IChatComponent getColouredMessage(EnumChatFormatting color, String message, Object... args) {
-        IChatComponent ret = getMessage(message,
-                                        args);
-        ret.getChatStyle().setColor(color);
+        IChatComponent ret = getMessage(message, args);
+        ret.getChatStyle()
+            .setColor(color);
         return ret;
     }
 
@@ -23,25 +23,20 @@ public class ChatHelper {
     }
 
     public static void addMessageToPlayer(EntityPlayer entityplayer, String message, Object... args) {
-        entityplayer.addChatMessage(getMessage(message,
-                                               args));
+        entityplayer.addChatMessage(getMessage(message, args));
     }
 
-    public static void addColouredMessageToPlayer(EntityPlayer entityplayer, EnumChatFormatting color, String message, Object... args) {
-        entityplayer.addChatMessage(getColouredMessage(color,
-                                                       message,
-                                                       args));
+    public static void addColouredMessageToPlayer(EntityPlayer entityplayer, EnumChatFormatting color, String message,
+        Object... args) {
+        entityplayer.addChatMessage(getColouredMessage(color, message, args));
     }
 
-    public static void sendChatMessageToAllNear(World world, int x, int y, int z, int range, String message, Object... args) {
+    public static void sendChatMessageToAllNear(World world, int x, int y, int z, int range, String message,
+        Object... args) {
         if (world.isRemote) return;
-        MinecraftServer.getServer().getConfigurationManager().sendToAllNear(x,
-                                                                            y,
-                                                                            z,
-                                                                            range,
-                                                                            world.provider.dimensionId,
-                                                                            new S02PacketChat(getMessage(message,
-                                                                                                         args)));
+        MinecraftServer.getServer()
+            .getConfigurationManager()
+            .sendToAllNear(x, y, z, range, world.provider.dimensionId, new S02PacketChat(getMessage(message, args)));
     }
 
 }

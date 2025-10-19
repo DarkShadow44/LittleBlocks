@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 
 public class InventorySubUpdate implements IInventory {
 
-    int           size;
-    int           start;
-    IInventory    parent;
+    int size;
+    int start;
+    IInventory parent;
     ContainerBase container;
 
     public InventorySubUpdate(ContainerBase container, IInventory parentInventory, int startSlot, int inventorySize) {
@@ -31,10 +31,8 @@ public class InventorySubUpdate implements IInventory {
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
-        ItemStack itemstack = parent.decrStackSize(slot + start,
-                                                   amount);
-        if (itemstack != null) {
-        }
+        ItemStack itemstack = parent.decrStackSize(slot + start, amount);
+        if (itemstack != null) {}
         return itemstack;
     }
 
@@ -45,8 +43,7 @@ public class InventorySubUpdate implements IInventory {
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack ist) {
-        parent.setInventorySlotContents(slot + start,
-                                        ist);
+        parent.setInventorySlotContents(slot + start, ist);
     }
 
     @Override
@@ -70,12 +67,10 @@ public class InventorySubUpdate implements IInventory {
     }
 
     @Override
-    public void openInventory() {
-    }
+    public void openInventory() {}
 
     @Override
-    public void closeInventory() {
-    }
+    public void closeInventory() {}
 
     @Override
     public boolean hasCustomInventoryName() {

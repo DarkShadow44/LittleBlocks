@@ -20,8 +20,9 @@ import net.minecraft.world.World;
  * 
  */
 public class ReadWriteLock {
-    private int readers  = 0;
-    private int writers  = 0;
+
+    private int readers = 0;
+    private int writers = 0;
     private int writeReq = 0;
 
     /**
@@ -29,16 +30,15 @@ public class ReadWriteLock {
      * Waits if no position is available.
      * 
      * @throws InterruptedException
-     *             if any thread interrupted the current thread before or while
-     *             the current thread was waiting for a notification. The
-     *             interrupted status of the current thread is cleared when this
-     *             exception is thrown.
+     *                              if any thread interrupted the current thread before or while
+     *                              the current thread was waiting for a notification. The
+     *                              interrupted status of the current thread is cleared when this
+     *                              exception is thrown.
      */
     public synchronized void readLock(World world) throws InterruptedException {
         while (writers > 0 || writeReq > 0) {
-            LoggerSlimevoidLib.getInstance("ReadWriteLock").write(world.isRemote,
-                                                                  "readLock() - waiting",
-                                                                  LoggerSlimevoidLib.LogLevel.INFO);
+            LoggerSlimevoidLib.getInstance("ReadWriteLock")
+                .write(world.isRemote, "readLock() - waiting", LoggerSlimevoidLib.LogLevel.INFO);
             wait();
         }
         readers++;
@@ -57,17 +57,16 @@ public class ReadWriteLock {
      * Waits if no position is available.
      * 
      * @throws InterruptedException
-     *             if any thread interrupted the current thread before or while
-     *             the current thread was waiting for a notification. The
-     *             interrupted status of the current thread is cleared when this
-     *             exception is thrown.
+     *                              if any thread interrupted the current thread before or while
+     *                              the current thread was waiting for a notification. The
+     *                              interrupted status of the current thread is cleared when this
+     *                              exception is thrown.
      */
     public synchronized void writeLock(World world) throws InterruptedException {
         writeReq++;
         while (readers > 0 || writers > 0) {
-            LoggerSlimevoidLib.getInstance("ReadWriteLock").write(world.isRemote,
-                                                                  "writeLock() - waiting",
-                                                                  LoggerSlimevoidLib.LogLevel.INFO);
+            LoggerSlimevoidLib.getInstance("ReadWriteLock")
+                .write(world.isRemote, "writeLock() - waiting", LoggerSlimevoidLib.LogLevel.INFO);
             wait();
         }
         writers++;

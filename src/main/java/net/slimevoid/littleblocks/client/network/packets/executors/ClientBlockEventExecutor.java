@@ -13,13 +13,13 @@ public class ClientBlockEventExecutor implements IPacketExecutor {
     public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
         if (packet instanceof PacketLittleBlocksEvents) {
             PacketLittleBlocksEvents packetEvent = (PacketLittleBlocksEvents) packet;
-            ((World) LittleBlocks.proxy.getLittleWorld(world,
-                                                       false)).addBlockEvent(packetEvent.xPosition,
-                                                                             packetEvent.yPosition,
-                                                                             packetEvent.zPosition,
-                                                                             packetEvent.getBlock(),
-                                                                             packetEvent.getInstrumentType(),
-                                                                             packetEvent.getPitch());
+            ((World) LittleBlocks.proxy.getLittleWorld(world, false)).addBlockEvent(
+                packetEvent.xPosition,
+                packetEvent.yPosition,
+                packetEvent.zPosition,
+                packetEvent.getBlock(),
+                packetEvent.getInstrumentType(),
+                packetEvent.getPitch());
         }
     }
 

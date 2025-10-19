@@ -12,6 +12,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 
 public class LittleChunkProvider implements IChunkProvider {
+
     private World realWorld;
     private World littleWorld;
 
@@ -25,8 +26,7 @@ public class LittleChunkProvider implements IChunkProvider {
      */
     @Override
     public Chunk loadChunk(int x, int y) {
-        return this.provideChunk(x,
-                                 y);
+        return this.provideChunk(x, y);
     }
 
     /**
@@ -53,8 +53,7 @@ public class LittleChunkProvider implements IChunkProvider {
      * Populates chunk with ores etc etc
      */
     @Override
-    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {
-    }
+    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3) {}
 
     /**
      * Two modes of operation: if passed true, save all Chunks in one go. If
@@ -97,7 +96,8 @@ public class LittleChunkProvider implements IChunkProvider {
      * not found returns null.
      */
     @Override
-    public ChunkPosition func_147416_a/* findClosestStructure */(World par1World, String par2Str, int par3, int par4, int par5) {
+    public ChunkPosition func_147416_a/* findClosestStructure */(World par1World, String par2Str, int par3, int par4,
+        int par5) {
         return null;
     }
 
@@ -107,8 +107,7 @@ public class LittleChunkProvider implements IChunkProvider {
     }
 
     @Override
-    public void recreateStructures(int var1, int var2) {
-    }
+    public void recreateStructures(int var1, int var2) {}
 
     @Override
     public boolean unloadQueuedChunks() {

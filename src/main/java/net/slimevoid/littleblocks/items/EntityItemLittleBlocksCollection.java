@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 
 public class EntityItemLittleBlocksCollection extends EntityItem {
+
     private HashMap<Item, ItemStack> itemstackCollection = new HashMap<Item, ItemStack>();
 
     public HashMap<Item, ItemStack> getCollection() {
@@ -35,9 +36,7 @@ public class EntityItemLittleBlocksCollection extends EntityItem {
         int i = 0;
         for (ItemStack itemstack : this.itemstackCollection.values()) {
             entityplayer.inventory.addItemStackToInventory(itemstack);
-            this.playSound("random.pop",
-                           0.2F,
-                           ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+            this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             ++i;
         }
         return i;
@@ -45,8 +44,7 @@ public class EntityItemLittleBlocksCollection extends EntityItem {
 
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
-        NBTTagList itemStacksTag = nbttagcompound.getTagList("ItemStacks",
-                                                             10);
+        NBTTagList itemStacksTag = nbttagcompound.getTagList("ItemStacks", 10);
         for (int i = 0; i < itemStacksTag.tagCount(); i++) {
             ItemStack itemstack = ItemStack.loadItemStackFromNBT((NBTTagCompound) itemStacksTag.getCompoundTagAt(i));
             this.addItemToDrop(itemstack);
@@ -62,8 +60,7 @@ public class EntityItemLittleBlocksCollection extends EntityItem {
             itemstack.writeToNBT(itemTag);
             itemStacksTag.appendTag(itemTag);
         }
-        nbttagcompound.setTag("ItemStacks",
-                              itemStacksTag);
+        nbttagcompound.setTag("ItemStacks", itemStacksTag);
     }
 
     @Override
@@ -82,8 +79,7 @@ public class EntityItemLittleBlocksCollection extends EntityItem {
         if (itemstackCollection.containsKey(itemstack.getItem())) {
             itemstackCollection.get(itemstack.getItem()).stackSize++;
         } else {
-            itemstackCollection.put(itemstack.getItem(),
-                                    itemstack);
+            itemstackCollection.put(itemstack.getItem(), itemstack);
         }
     }
 

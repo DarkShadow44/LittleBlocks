@@ -10,18 +10,18 @@ import net.minecraft.world.World;
 public abstract class ContainerBase extends Container {
 
     protected InventoryPlayer playerInventory;
-    protected IInventory      customInventory;
-    protected World           world;
+    protected IInventory customInventory;
+    protected World world;
 
-    public ContainerBase(InventoryPlayer playerInventory, IInventory customInventory, World world, int playerColOffset, int playerRowOffset) {
+    public ContainerBase(InventoryPlayer playerInventory, IInventory customInventory, World world, int playerColOffset,
+        int playerRowOffset) {
         super();
         this.playerInventory = playerInventory;
         this.customInventory = customInventory;
         this.world = world;
         this.bindLocalInventory();
         if (this.shouldBindPlayerInventory()) {
-            this.bindPlayerInventory(playerColOffset,
-                                     playerRowOffset);
+            this.bindPlayerInventory(playerColOffset, playerRowOffset);
         }
     }
 
@@ -36,7 +36,12 @@ public abstract class ContainerBase extends Container {
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
                 int slotIndex = column + (row * 9);
-                this.addSlotToContainer(new Slot(new InventorySubUpdate(ContainerBase.this, playerInventory, 9, 27), slotIndex, (8 + column * 18 + playerColOffset), (row * 18 + playerRowOffset)));
+                this.addSlotToContainer(
+                    new Slot(
+                        new InventorySubUpdate(ContainerBase.this, playerInventory, 9, 27),
+                        slotIndex,
+                        (8 + column * 18 + playerColOffset),
+                        (row * 18 + playerRowOffset)));
             }
         }
     }
@@ -45,15 +50,14 @@ public abstract class ContainerBase extends Container {
         // Hotbar inventory
         for (int row = 0; row < 9; ++row) {
             int slotIndex = row;
-            this.addSlotToContainer(new Slot(playerInventory, slotIndex, (8 + row * 18 + playerColOffset), 58 + playerRowOffset));
+            this.addSlotToContainer(
+                new Slot(playerInventory, slotIndex, (8 + row * 18 + playerColOffset), 58 + playerRowOffset));
         }
     }
 
     protected void bindPlayerInventory(int playerColOffset, int playerRowOffset) {
-        this.bindUpperInventory(playerColOffset,
-                                playerRowOffset);
-        this.bindHotBarInventory(playerColOffset,
-                                 playerRowOffset);
+        this.bindUpperInventory(playerColOffset, playerRowOffset);
+        this.bindHotBarInventory(playerColOffset, playerRowOffset);
     }
 
     public InventoryPlayer getPlayerInventory() {
@@ -82,11 +86,9 @@ public abstract class ContainerBase extends Container {
         }
 
         @Override
-        public void onCraftMatrixChanged(IInventory inventory) {
-        }
+        public void onCraftMatrixChanged(IInventory inventory) {}
 
-        public ContainerNull() {
-        }
+        public ContainerNull() {}
     }
 
 }

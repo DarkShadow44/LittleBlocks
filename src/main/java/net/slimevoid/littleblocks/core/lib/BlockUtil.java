@@ -1,7 +1,5 @@
 package net.slimevoid.littleblocks.core.lib;
 
-import ibxm.Player;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +29,7 @@ import net.slimevoid.littleblocks.core.LoggerLittleBlocks;
 import net.slimevoid.littleblocks.tileentities.TileEntityLittleChunk;
 import net.slimevoid.littleblocks.world.ItemInLittleWorldManager;
 import net.slimevoid.littleblocks.world.LittlePlayerController;
+
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.Event;
@@ -40,7 +39,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockUtil {
 
     @SideOnly(Side.CLIENT)
-    private static LittlePlayerController                            littlePlayerController;
+    private static LittlePlayerController littlePlayerController;
 
     private static HashMap<EntityPlayerMP, ItemInLittleWorldManager> itemInLittleWorldManagers;
 
@@ -53,10 +52,17 @@ public class BlockUtil {
     @SideOnly(Side.CLIENT)
     public static LittlePlayerController getLittleController() {
         if (littlePlayerController == null) {
-            EntityPlayer entityplayer = FMLClientHandler.instance().getClientPlayerEntity();
+            EntityPlayer entityplayer = FMLClientHandler.instance()
+                .getClientPlayerEntity();
             World world = entityplayer.worldObj;
-            setLittleController(new LittlePlayerController(FMLClientHandler.instance().getClient(), (NetHandlerPlayClient) FMLClientHandler.instance().getClientPlayHandler()),
-                                world.getWorldInfo().getGameType());
+            setLittleController(
+                new LittlePlayerController(
+                    FMLClientHandler.instance()
+                        .getClient(),
+                    (NetHandlerPlayClient) FMLClientHandler.instance()
+                        .getClientPlayHandler()),
+                world.getWorldInfo()
+                    .getGameType());
         }
         return littlePlayerController;
     }
@@ -70,8 +76,7 @@ public class BlockUtil {
     }
 
     private static ItemInLittleWorldManager setLittleItemManagerForPlayer(EntityPlayerMP entityplayer) {
-        itemInLittleWorldManagers.put(entityplayer,
-                                      new ItemInLittleWorldManager(entityplayer.worldObj, entityplayer));
+        itemInLittleWorldManagers.put(entityplayer, new ItemInLittleWorldManager(entityplayer.worldObj, entityplayer));
         return itemInLittleWorldManagers.get(entityplayer);
     }
 
@@ -84,12 +89,12 @@ public class BlockUtil {
         registerDisallowedItem(ItemMonsterPlacer.class);
     }
 
-    private static Set<Integer>                     disallowedItemIDs           = new HashSet<Integer>();
-    private static Set<Integer>                     disallowedBlockIDs          = new HashSet<Integer>();
-    private static Set<Class<? extends Item>>       disallowedItems             = new HashSet<Class<? extends Item>>();
-    private static Set<Class<? extends Block>>      disallowedBlocks            = new HashSet<Class<? extends Block>>();
+    private static Set<Integer> disallowedItemIDs = new HashSet<Integer>();
+    private static Set<Integer> disallowedBlockIDs = new HashSet<Integer>();
+    private static Set<Class<? extends Item>> disallowedItems = new HashSet<Class<? extends Item>>();
+    private static Set<Class<? extends Block>> disallowedBlocks = new HashSet<Class<? extends Block>>();
     private static Set<Class<? extends TileEntity>> disallowedBlockTileEntities = new HashSet<Class<? extends TileEntity>>();
-    private static Set<Class<? extends Block>>      disallowedBlocksToTick      = new HashSet<Class<? extends Block>>();
+    private static Set<Class<? extends Block>> disallowedBlocksToTick = new HashSet<Class<? extends Block>>();
 
     private static void registerDisallowedBlockTick(Class<? extends Block> blockClass) {
         if (blockClass != null) {
@@ -100,8 +105,7 @@ public class BlockUtil {
     }
 
     public static boolean isBlockAllowedToTick(Block littleBlock) {
-        if (littleBlock != null
-            && disallowedBlocksToTick.contains(littleBlock.getClass())) {
+        if (littleBlock != null && disallowedBlocksToTick.contains(littleBlock.getClass())) {
             return false;
         }
         return true;
@@ -164,9 +168,11 @@ public class BlockUtil {
             if (!disallowedBlockTileEntities.contains(tileclass)) {
                 disallowedBlockTileEntities.add(tileclass);
             } else {
-                LoggerLittleBlocks.getInstance(Logger.filterClassName(LBCore.class.toString())).write(true,
-                                                                                                      "Tried to add a tileentity to the disallowed list that already exists",
-                                                                                                      Logger.LogLevel.DEBUG);
+                LoggerLittleBlocks.getInstance(Logger.filterClassName(LBCore.class.toString()))
+                    .write(
+                        true,
+                        "Tried to add a tileentity to the disallowed list that already exists",
+                        Logger.LogLevel.DEBUG);
             }
         }
     }
@@ -183,22 +189,20 @@ public class BlockUtil {
 
     public static boolean isLittleChunk(World world, int x, int y, int z) {
         if (world instanceof ILittleWorld) {
-            return ((ILittleWorld) world).getParentWorld().getBlock(x >> 3,
-                                                                    y >> 3,
-                                                                    z >> 3) == ConfigurationLib.littleChunk;
+            return ((ILittleWorld) world).getParentWorld()
+                .getBlock(x >> 3, y >> 3, z >> 3) == ConfigurationLib.littleChunk;
         }
         return false;
     }
 
     public static boolean isLittleChunk(World world, MovingObjectPosition target) {
-        return isLittleChunk(world,
-                             target.blockX,
-                             target.blockY,
-                             target.blockZ);
+        return isLittleChunk(world, target.blockX, target.blockY, target.blockZ);
     }
 
-    public static void onServerBlockActivated(World world, EntityPlayer entityplayer, ItemStack stack, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-    	MinecraftServer mcServer = FMLCommonHandler.instance().getMinecraftServerInstance();
+    public static void onServerBlockActivated(World world, EntityPlayer entityplayer, ItemStack stack, int x, int y,
+        int z, int side, float hitX, float hitY, float hitZ) {
+        MinecraftServer mcServer = FMLCommonHandler.instance()
+            .getMinecraftServerInstance();
         ItemStack itemstack = entityplayer.inventory.getCurrentItem();
         boolean flag = false;
         // ((EntityPlayerMP) entityplayer).func_143004_u();
@@ -208,54 +212,28 @@ public class BlockUtil {
                 return;
             }
 
-            PlayerInteractEvent event = ForgeEventFactory.onPlayerInteract(entityplayer,
-                                                                           PlayerInteractEvent.Action.RIGHT_CLICK_AIR,
-                                                                           0,
-                                                                           0,
-                                                                           0,
-                                                                           -1,
-                                                                           world);
+            PlayerInteractEvent event = ForgeEventFactory
+                .onPlayerInteract(entityplayer, PlayerInteractEvent.Action.RIGHT_CLICK_AIR, 0, 0, 0, -1, world);
             if (event.useItem != Event.Result.DENY) {
-                getLittleItemManager((EntityPlayerMP) entityplayer,
-                                     world).tryUseItem(entityplayer,
-                                                       world,
-                                                       itemstack);
+                getLittleItemManager((EntityPlayerMP) entityplayer, world).tryUseItem(entityplayer, world, itemstack);
             }
-        } else if (y >= world.getHeight() - 1
-                   && (side == 1 || y >= world.getHeight())) {
+        } else if (y >= world.getHeight() - 1 && (side == 1 || y >= world.getHeight())) {
             // TODO :: Send Player Build height message
             flag = true;
         } else {
             // double dist = this.getBlockReachDistance() + 1;
             // dist *= dist;
-            if (!mcServer.isBlockProtected(((ILittleWorld) world).getParentWorld(),
-                                           x >> 3,
-                                           y >> 3,
-                                           z >> 3,
-                                           entityplayer)) {
-            	getLittleItemManager((EntityPlayerMP) entityplayer,
-                                     world).activateBlockOrUseItem(entityplayer,
-                                                                   world,
-                                                                   itemstack,
-                                                                   x,
-                                                                   y,
-                                                                   z,
-                                                                   side,
-                                                                   hitX,
-                                                                   hitY,
-                                                                   hitZ);
-            	flag = true;
+            if (!mcServer
+                .isBlockProtected(((ILittleWorld) world).getParentWorld(), x >> 3, y >> 3, z >> 3, entityplayer)) {
+                getLittleItemManager((EntityPlayerMP) entityplayer, world)
+                    .activateBlockOrUseItem(entityplayer, world, itemstack, x, y, z, side, hitX, hitY, hitZ);
+                flag = true;
             }
 
         }
 
         if (flag) {
-            checkPlacement(world,
-                           entityplayer,
-                           x,
-                           y,
-                           z,
-                           side);
+            checkPlacement(world, entityplayer, x, y, z, side);
         }
 
         itemstack = entityplayer.inventory.getCurrentItem();
@@ -267,25 +245,25 @@ public class BlockUtil {
 
         if (itemstack == null || itemstack.getMaxItemUseDuration() == 0) {
             ((EntityPlayerMP) entityplayer).isChangingQuantityOnly = true;
-            entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem] = ItemStack.copyItemStack(entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem]);
-            Slot slot = entityplayer.openContainer.getSlotFromInventory(entityplayer.inventory,
-                                                                        entityplayer.inventory.currentItem);
+            entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem] = ItemStack
+                .copyItemStack(entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem]);
+            Slot slot = entityplayer.openContainer
+                .getSlotFromInventory(entityplayer.inventory, entityplayer.inventory.currentItem);
             entityplayer.openContainer.detectAndSendChanges();
             ((EntityPlayerMP) entityplayer).isChangingQuantityOnly = false;
 
-            if (!ItemStack.areItemStacksEqual(entityplayer.inventory.getCurrentItem(),
-                                              stack)) {
-                ((EntityPlayerMP) entityplayer).playerNetServerHandler.sendPacket(new S2FPacketSetSlot(entityplayer.openContainer.windowId, slot.slotNumber, entityplayer.inventory.getCurrentItem()));
+            if (!ItemStack.areItemStacksEqual(entityplayer.inventory.getCurrentItem(), stack)) {
+                ((EntityPlayerMP) entityplayer).playerNetServerHandler.sendPacket(
+                    new S2FPacketSetSlot(
+                        entityplayer.openContainer.windowId,
+                        slot.slotNumber,
+                        entityplayer.inventory.getCurrentItem()));
             }
         }
     }
 
     private static void checkPlacement(World world, EntityPlayer entityplayer, int x, int y, int z, int side) {
-        PacketLib.sendBlockChange(world,
-                                  entityplayer,
-                                  x,
-                                  y,
-                                  z);
+        PacketLib.sendBlockChange(world, entityplayer, x, y, z);
         if (side == 0) {
             --y;
         }
@@ -309,28 +287,14 @@ public class BlockUtil {
         if (side == 5) {
             ++x;
         }
-        Block block = world.getBlock(x,
-                                     y,
-                                     z);
+        Block block = world.getBlock(x, y, z);
         if (block != null && block instanceof BlockPistonBase) {
-            int newData = BlockPistonBase.determineOrientation(((ILittleWorld) world).getParentWorld(),
-                                                               x >> 3,
-                                                               y >> 3,
-                                                               z >> 3,
-                                                               entityplayer);
+            int newData = BlockPistonBase
+                .determineOrientation(((ILittleWorld) world).getParentWorld(), x >> 3, y >> 3, z >> 3, entityplayer);
             world.setBlock/** .setBlockAndMetadataWithNotify **/
-            (x,
-             y,
-             z,
-             block,
-             newData,
-             3);
+            (x, y, z, block, newData, 3);
         }
 
-        PacketLib.sendBlockChange(world,
-                                  entityplayer,
-                                  x,
-                                  y,
-                                  z);
+        PacketLib.sendBlockChange(world, entityplayer, x, y, z);
     }
 }

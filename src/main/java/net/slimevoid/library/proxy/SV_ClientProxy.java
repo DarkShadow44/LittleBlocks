@@ -17,7 +17,8 @@ public class SV_ClientProxy extends SV_CommonProxy {
 
     @Override
     public String getMinecraftDir() {
-        return FMLClientHandler.instance().getClient().mcDataDir.toString();
+        return FMLClientHandler.instance()
+            .getClient().mcDataDir.toString();
     }
 
     @Override

@@ -26,8 +26,7 @@ public class SV_CommonProxy implements ICommonProxy {
     }
 
     @Override
-    public void registerRenderInformation() {
-    }
+    public void registerRenderInformation() {}
 
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -40,32 +39,25 @@ public class SV_CommonProxy implements ICommonProxy {
     }
 
     @Override
-    public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {
-    }
+    public void registerTileEntitySpecialRenderer(Class<? extends TileEntity> clazz) {}
 
     @Override
-    public void registerTickHandlers() {
-    }
+    public void registerTickHandlers() {}
 
     @Override
-    public void registerEventHandlers() {
-    }
+    public void registerEventHandlers() {}
 
     @Override
-    public void preInit() {
-    }
+    public void preInit() {}
 
     @Override
-    public void init() {
-    }
+    public void init() {}
 
     @Override
-    public void postInit() {
-    }
+    public void postInit() {}
 
     @Override
-    public void registerConfigurationProperties(File configFile) {
-    }
+    public void registerConfigurationProperties(File configFile) {}
 
     @Override
     public boolean isClient(World world) {

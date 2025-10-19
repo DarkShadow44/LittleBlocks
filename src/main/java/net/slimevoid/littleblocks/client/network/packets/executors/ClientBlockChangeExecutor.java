@@ -13,18 +13,12 @@ public class ClientBlockChangeExecutor implements IPacketExecutor {
 
     @Override
     public void execute(PacketUpdate packet, World world, EntityPlayer entityplayer) {
-        if (packet instanceof PacketLittleBlockChange
-            && packet.getCommand().equals(CommandLib.UPDATE_CLIENT)
-            && packet.targetExists(world)) {
-        	Block block = ((PacketLittleBlockChange) packet).getBlock();
-        	int metadata = ((PacketLittleBlockChange) packet).getMetadata();
-            ((World) LittleBlocks.proxy.getLittleWorld(world,
-                                                       false)).setBlock(packet.xPosition,
-                                                                        packet.yPosition,
-                                                                        packet.zPosition,
-                                                                        block,
-                                                                        metadata,
-                                                                        3);
+        if (packet instanceof PacketLittleBlockChange && packet.getCommand()
+            .equals(CommandLib.UPDATE_CLIENT) && packet.targetExists(world)) {
+            Block block = ((PacketLittleBlockChange) packet).getBlock();
+            int metadata = ((PacketLittleBlockChange) packet).getMetadata();
+            ((World) LittleBlocks.proxy.getLittleWorld(world, false))
+                .setBlock(packet.xPosition, packet.yPosition, packet.zPosition, block, metadata, 3);
         }
     }
 

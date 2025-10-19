@@ -1,6 +1,5 @@
 package net.slimevoid.library;
 
-
 public interface IPacketHandler {
 
     /**

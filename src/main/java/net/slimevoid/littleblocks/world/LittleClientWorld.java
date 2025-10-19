@@ -1,8 +1,9 @@
 package net.slimevoid.littleblocks.world;
 
-import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+
+import cpw.mods.fml.client.FMLClientHandler;
 
 public class LittleClientWorld extends LittleWorld {
 
@@ -10,10 +11,11 @@ public class LittleClientWorld extends LittleWorld {
         super(world, worldprovider, worldName);
     }
 
-	@Override
-	/** getRenderViewDistance()**/
-	protected int func_152379_p() {
-        return FMLClientHandler.instance().getClient().gameSettings.renderDistanceChunks;
-	}
+    @Override
+    /** getRenderViewDistance() **/
+    protected int func_152379_p() {
+        return FMLClientHandler.instance()
+            .getClient().gameSettings.renderDistanceChunks;
+    }
 
 }

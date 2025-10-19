@@ -22,17 +22,10 @@ public class BlockLBPistonBase extends BlockPistonBase {
         int yOffset = y + Facing.offsetsYForSide[eventID];
         int zOffset = z + Facing.offsetsZForSide[eventID];
         if (world instanceof ILittleWorld) {
-            if (((ILittleWorld) world).isOutSideLittleWorld(xOffset,
-                                                            yOffset,
-                                                            zOffset)) {
+            if (((ILittleWorld) world).isOutSideLittleWorld(xOffset, yOffset, zOffset)) {
                 return false;
             }
         }
-        return Blocks.piston.onBlockEventReceived(world,
-                                                  x,
-                                                  y,
-                                                  z,
-                                                  blockID,
-                                                  eventID);
+        return Blocks.piston.onBlockEventReceived(world, x, y, z, blockID, eventID);
     }
 }

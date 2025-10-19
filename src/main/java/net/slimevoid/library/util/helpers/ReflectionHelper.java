@@ -9,7 +9,7 @@ import java.lang.reflect.Modifier;
  * Object privateVariable = ReflectionHelper.getInstance([ClassName].class).getPrivateFieldAtIndex(0);
  * 
  * if (privateVariable instanceof Block) {
- *      Block block = (Block) privateVariable;
+ * Block block = (Block) privateVariable;
  * }
  * 
  * @author Gregory Jones
@@ -33,8 +33,7 @@ public class ReflectionHelper {
     public boolean setFinalStaticFieldAtIndex(int declaredIndex, Object newValue) {
         try {
             Field declaredField = this._clazz.getDeclaredFields()[declaredIndex];
-            this.setFinalStatic(declaredField,
-                                newValue);
+            this.setFinalStatic(declaredField, newValue);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,11 +46,9 @@ public class ReflectionHelper {
 
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
-        modifiersField.setInt(field,
-                              field.getModifiers() & ~Modifier.FINAL);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
-        field.set(null,
-                  newValue);
+        field.set(null, newValue);
     }
 
     public Object getPrivateFieldAtIndex(int declaredIndex) {

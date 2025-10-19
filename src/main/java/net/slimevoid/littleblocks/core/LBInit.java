@@ -18,46 +18,37 @@ import net.slimevoid.littleblocks.core.lib.CoreLib;
 import net.slimevoid.littleblocks.items.wand.EnumWandAction;
 
 public class LBInit {
+
     private static boolean initialized = false;
 
     public static void preInitialize() {
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering names...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering names...");
         LBCore.registerNames();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering items...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering items...");
         LBCore.registerItems();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering blocks...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering blocks...");
         LBCore.registerBlocks();
     }
 
     public static void initialize() {
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering event handlers...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering event handlers...");
         LittleBlocks.proxy.registerEventHandlers();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering render information...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering render information...");
         LittleBlocks.proxy.registerRenderInformation();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering tick handlers...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering tick handlers...");
         LittleBlocks.proxy.registerTickHandlers();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering recipes...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering recipes...");
         LBCore.registerRecipes();
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Initializing Little helper...");
-        LittleBlocksHelper.init(LittleBlocks.proxy,
-                                ConfigurationLib.littleBlocksSize);
+        SlimevoidCore.console(CoreLib.MOD_ID, "Initializing Little helper...");
+        LittleBlocksHelper.init(LittleBlocks.proxy, ConfigurationLib.littleBlocksSize);
 
-        SlimevoidCore.console(CoreLib.MOD_ID,
-                              "Registering Little Wand...");
+        SlimevoidCore.console(CoreLib.MOD_ID, "Registering Little Wand...");
         EnumWandAction.registerWandActions();
     }
 
