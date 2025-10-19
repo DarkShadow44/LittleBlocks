@@ -1,16 +1,11 @@
 package net.slimevoid.littleblocks.blocks;
 
-import net.minecraft.block.BlockPistonBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 
-public class BlockLBPistonBase extends BlockPistonBase {
-
-    public BlockLBPistonBase(int blockID, boolean isSticky) {
-        super(isSticky);
-    }
+public class BlockLBPistonBase {
 
     /**
      * Called when the block receives a BlockEvent - see World.addBlockEvent. By
