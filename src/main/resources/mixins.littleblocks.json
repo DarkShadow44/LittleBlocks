@@ -1,0 +1,7 @@
+{
+  "package": "net.slimevoid.littleblocks.mixins",
+  "refmap": "net.slimevoid.littleblocks.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.7",
+  "compatibilityLevel": "JAVA_8"
+}
