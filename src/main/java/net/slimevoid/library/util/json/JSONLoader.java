@@ -11,8 +11,6 @@ import net.slimevoid.library.core.SlimevoidCore;
 import net.slimevoid.library.core.lib.CoreLib;
 import net.slimevoid.library.util.FileUtils;
 
-import argo.saj.InvalidSyntaxException;
-
 public abstract class JSONLoader {
 
     private static HashMap<String, JSONLoader> jsonLoaders = new HashMap<String, JSONLoader>();
@@ -49,8 +47,6 @@ public abstract class JSONLoader {
     public void loadFile() {
         try {
             this.parseJSON(this.readFile());
-        } catch (InvalidSyntaxException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,9 +78,8 @@ public abstract class JSONLoader {
 
     /**
      * Loads default XML Recipe files from a directory.
-     * 
-     * @param dir
-     *            Default XML directory.
+     *
+     * Default XML directory.
      */
     public InputStream getInputStream() {
         try {
@@ -121,7 +116,7 @@ public abstract class JSONLoader {
         return null;
     }
 
-    protected abstract void parseJSON(String string) throws InvalidSyntaxException;
+    protected abstract void parseJSON(String string);
 
     protected abstract String getModID();
 

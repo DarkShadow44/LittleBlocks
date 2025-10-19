@@ -1,17 +1,22 @@
-[
 {
-  "modid": "LittleBlocks",
-  "name": "Little Blocks",
-  "description": "The Little Blocks mod",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://github.com/SlimeVoid/LittleBlocks-FML",
-  "updateUrl": "",
-  "credits": "Eurymachus, Vengeurk, ali4z, Tarig0",
-  "authors": ["Slime Void Crew"],
-  "logoFile": "/littleblocks/logo.png",
-  "screenshots": [""],
-  "parent":"",
-  "dependencies": ["SlimevoidLib"]
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "littleblocks",
+    "name": "Little Blocks",
+    "description": "The Little Blocks mod",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Slime Void Crew"],
+    "credits": "Eurymachus, Vengeurk, ali4z, Tarig0",
+    "authors": "",
+    "logoFile": "/littleblocks/logo.png",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": false
+  }]
 }
-]
