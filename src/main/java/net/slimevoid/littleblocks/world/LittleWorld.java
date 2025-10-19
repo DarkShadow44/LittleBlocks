@@ -637,7 +637,7 @@ public abstract class LittleWorld extends World implements ILittleWorld {
                 } else if (chunk.getBlock((x & 0x7f) >> 3, y >> 3, (z & 0x7f) >> 3) != ConfigurationLib.littleChunk) {
                     return false;
                 }
-                if (!this.isRemote) {
+                if (!this.isRemote || (update & 8) != 0) {
                     TileEntityLittleChunk tile = (TileEntityLittleChunk) this.getParentWorld()
                         .getTileEntity(x >> 3, y >> 3, z >> 3);
                     Block originalId = null;
