@@ -50,8 +50,10 @@ public class LittleBlocksLittleRenderer {
         }
     }
 
-    public void renderLittleBlocks(IBlockAccess iblockaccess, int x, int y, int z) {
-        if (this.littleBlocksToRender.size() > 0) {
+    public boolean renderLittleBlocks(IBlockAccess iblockaccess, int x, int y, int z) {
+        if (this.littleBlocksToRender.isEmpty()) {
+            return false;
+        }
             Tessellator tessellator = Tessellator.instance;
             tessellator.draw();
             GL11.glPushMatrix();
@@ -87,7 +89,7 @@ public class LittleBlocksLittleRenderer {
             GL11.glDisable(GL12.GL_RESCALE_NORMAL);
             GL11.glPopMatrix();
             tessellator.startDrawingQuads();
-        }
+        return true;
     }
 
     public boolean needsRefresh(RenderBlocks renderer) {

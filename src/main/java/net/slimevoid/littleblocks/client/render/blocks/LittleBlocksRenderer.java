@@ -45,11 +45,10 @@ public class LittleBlocksRenderer implements ISimpleBlockRenderingHandler {
                 }
             }
             if (isSolidPass) {
-                this.littleSolidBlocks.renderLittleBlocks(world, x, y, z);
+                return this.littleSolidBlocks.renderLittleBlocks(world, x, y, z);
             } else {
-                this.littleAlphaBlocks.renderLittleBlocks(world, x, y, z);
+                return this.littleAlphaBlocks.renderLittleBlocks(world, x, y, z);
             }
-            return true;
         }
         return false;
     }
