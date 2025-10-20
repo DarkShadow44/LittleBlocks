@@ -149,7 +149,7 @@ public class LittleFakeChunk extends Chunk {
 
     @Override
     public void setChunkModified() {
-        throw new RuntimeException();
+
     }
 
     @Override
