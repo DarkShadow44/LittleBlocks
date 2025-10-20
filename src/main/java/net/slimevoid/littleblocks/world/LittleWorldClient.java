@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldSavedData;
 import net.minecraft.world.WorldSettings;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.storage.ISaveHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -416,5 +417,10 @@ public class LittleWorldClient extends World implements ILittleWorld {
     public int getUniqueDataId(String itemName) {
         int yourMum = 0;
         return yourMum;
+    }
+
+    @Override
+    public Chunk getChunkFromChunkCoords(int x, int z) {
+        return getLittleWorld().getChunkFromChunkCoords(x, z);
     }
 }
