@@ -2,9 +2,8 @@ package net.slimevoid.littleblocks.mixins;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.slimevoid.littleblocks.world.LittleWorld;
-
 import net.slimevoid.littleblocks.world.LittleWorldServer;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

@@ -6,12 +6,15 @@ import com.gtnewhorizon.gtnhmixins.builders.MixinBuilder;
 public enum Mixins implements IMixins {
 
     CORE(new MixinBuilder().setPhase(Phase.EARLY)
-        .addCommonMixins("MixinTileEntityPiston")),
+        .addCommonMixins(
+            "MixinTileEntityPiston",
+            "MixinOpenGuiMessage",
+            "MixinFMLNetworkHandler",
+            "MixinOpenGuiHandler")),
 
     GT5(new MixinBuilder().setPhase(Phase.LATE)
         .addRequiredMod(TargetedMod.GT5)
-        .addCommonMixins("MixinBaseMetaTileEntity")
-      );
+        .addCommonMixins("MixinBaseMetaTileEntity"));
 
     private final MixinBuilder builder;
 
