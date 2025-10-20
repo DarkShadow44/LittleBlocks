@@ -1,6 +1,6 @@
 package net.slimevoid.littleblocks.blocks;
 
-import net.minecraft.init.Blocks;
+import net.minecraft.block.Block;
 import net.minecraft.util.Facing;
 import net.minecraft.world.World;
 import net.slimevoid.littleblocks.api.ILittleWorld;
@@ -12,7 +12,7 @@ public class BlockLBPistonBase {
      * default, passes it on to the tile entity at this location. Args: world,
      * x, y, z, blockID, EventID, event parameter
      */
-    public static boolean onEventReceived(World world, int x, int y, int z, int blockID, int eventID) {
+    public static boolean onEventReceived(Block block, World world, int x, int y, int z, int blockID, int eventID) {
         int xOffset = x + Facing.offsetsXForSide[eventID];
         int yOffset = y + Facing.offsetsYForSide[eventID];
         int zOffset = z + Facing.offsetsZForSide[eventID];
@@ -21,6 +21,6 @@ public class BlockLBPistonBase {
                 return false;
             }
         }
-        return Blocks.piston.onBlockEventReceived(world, x, y, z, blockID, eventID);
+        return block.onBlockEventReceived(world, x, y, z, blockID, eventID);
     }
 }

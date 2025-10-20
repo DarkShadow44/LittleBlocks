@@ -360,6 +360,7 @@ public class LittleServerWorld extends LittleWorld {
         if (block == blockEventData.getBlock()) {
             if (block instanceof BlockPistonBase) {
                 return BlockLBPistonBase.onEventReceived(
+                    block,
                     this,
                     blockEventData.func_151340_a(),
                     blockEventData.func_151342_b(),
