@@ -703,7 +703,8 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
         List pendingUpdates = ((World) this.getLittleWorld())
             .getPendingBlockUpdates(new Chunk((World) this.getLittleWorld(), this.xCoord, this.zCoord), false);
         if (pendingUpdates != null) {
-            long time = ((World) this.getLittleWorld()).getTotalWorldTime();
+            long time = getLittleWorld().getParentWorld()
+                .getTotalWorldTime();
             NBTTagList pendingUpdateList = new NBTTagList();
             Iterator pendingIterator = pendingUpdates.iterator();
 
