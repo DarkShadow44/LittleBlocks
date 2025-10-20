@@ -421,6 +421,6 @@ public class LittleWorldClient extends World implements ILittleWorld {
 
     @Override
     public Chunk getChunkFromChunkCoords(int x, int z) {
-        return getLittleWorld().getChunkFromChunkCoords(x, z);
+        return new LittleFakeChunk(getLittleWorld(), x, z);
     }
 }
