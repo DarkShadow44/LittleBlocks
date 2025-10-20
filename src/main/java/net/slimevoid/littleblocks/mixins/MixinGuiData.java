@@ -16,6 +16,7 @@ public class MixinGuiData implements IGuiData {
     @Unique
     World littleblocks$world;
 
+    @Override
     public void littleblocks$setWorld(World world) {
         littleblocks$world = world;
     }
@@ -26,6 +27,11 @@ public class MixinGuiData implements IGuiData {
             return littleblocks$world;
         }
         return original.call();
+    }
+
+    @Override
+    public boolean littleblocks$hasLittleWorld() {
+        return littleblocks$world != null;
     }
 
 }
