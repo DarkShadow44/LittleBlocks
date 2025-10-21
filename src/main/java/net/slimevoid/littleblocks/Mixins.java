@@ -11,7 +11,8 @@ public enum Mixins implements IMixins {
             "MixinOpenGuiMessage",
             "MixinFMLNetworkHandler",
             "MixinOpenGuiHandler",
-            "MixinTessellator")),
+            "MixinTessellator")
+        .addClientMixins("MixinRenderGlobal", "MixinEntitySmokeFX")),
 
     GT5(new MixinBuilder().setPhase(Phase.LATE)
         .addRequiredMod(TargetedMod.GT5)

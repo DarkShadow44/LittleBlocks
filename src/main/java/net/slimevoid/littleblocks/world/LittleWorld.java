@@ -1039,16 +1039,16 @@ public abstract class LittleWorld extends World implements ILittleWorld {
     }
 
     @Override
-    public void spawnParticle(String s, double x, double y, double z, double d3, double d4, double d5) {
+    public void spawnParticle(String s, double x, double y, double z, double velX, double velY, double velZ) {
         this.getParentWorld()
             .spawnParticle(
-                s,
+                "littleblocks$" + s,
                 x / ConfigurationLib.littleBlocksSize,
                 y / ConfigurationLib.littleBlocksSize,
                 z / ConfigurationLib.littleBlocksSize,
-                d3,
-                d4,
-                d5);
+                velX / ConfigurationLib.littleBlocksSize,
+                velY / ConfigurationLib.littleBlocksSize,
+                velZ / ConfigurationLib.littleBlocksSize);
     }
 
     @Override
