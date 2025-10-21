@@ -63,6 +63,9 @@ public class CommonProxy implements ILBCommonProxy {
     @Override
     public void registerTickHandlers() {
         MinecraftForge.EVENT_BUS.register(new LittleWorldServerTickHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new LittleWorldServerTickHandler());
     }
 
     @Override

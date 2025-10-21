@@ -29,6 +29,9 @@ import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 
+import codechicken.multipart.TileMultipart;
+import codechicken.multipart.handler.MultipartSaveLoad;
+
 public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
     public int size = ConfigurationLib.littleBlocksSize;
@@ -507,6 +510,20 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
         }
     }
 
+    private boolean skipMultipartTileUpdate(TileEntity existing, TileEntity added) {
+        if (existing instanceof TileMultipart && added instanceof MultipartSaveLoad.TileNBTContainer) {
+            return true;
+            /*
+             * NBTTagCompound tag1 = new NBTTagCompound();
+             * existing.writeToNBT(tag1);
+             * NBTTagCompound tag2 = new NBTTagCompound();
+             * added.writeToNBT(tag2);
+             * return tag1.equals(tag2);
+             */
+        }
+        return false;
+    }
+
     public void setTileEntity(int x, int y, int z, TileEntity tile) {
         ChunkPosition chunkposition = new ChunkPosition(x, y, z);
 
@@ -517,7 +534,11 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
         Block block = this.getBlock(x, y, z);
         if (block != null && block.hasTileEntity(this.getBlockMetadata(x, y, z))) {
             if (this.chunkTileEntityMap.containsKey(chunkposition)) {
-                ((TileEntity) this.chunkTileEntityMap.get(chunkposition)).invalidate();
+                TileEntity existing = this.chunkTileEntityMap.get(chunkposition);
+                if (skipMultipartTileUpdate(existing, tile)) {
+                    return;
+                }
+                existing.invalidate();
             }
             tile.validate();
             this.chunkTileEntityMap.put(chunkposition, tile);
