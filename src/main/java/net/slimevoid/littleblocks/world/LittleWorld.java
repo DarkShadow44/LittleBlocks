@@ -1046,9 +1046,9 @@ public abstract class LittleWorld extends World implements ILittleWorld {
                 x / ConfigurationLib.littleBlocksSize,
                 y / ConfigurationLib.littleBlocksSize,
                 z / ConfigurationLib.littleBlocksSize,
-                velX / ConfigurationLib.littleBlocksSize,
-                velY / ConfigurationLib.littleBlocksSize,
-                velZ / ConfigurationLib.littleBlocksSize);
+                velX,
+                velY,
+                velZ);
     }
 
     @Override

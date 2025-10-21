@@ -31,6 +31,8 @@ public class MixinRenderGlobal {
         if (isLittleBlocks) {
             float scale = 1.0f / ConfigurationLib.littleBlocksSize;
             fx.multipleParticleScaleBy(scale);
+            fx.multiplyVelocity(scale);
+            fx.setPosition(fx.posX, fx.posY, fx.posZ);
             if (fx instanceof EntitySmokeFX) {
                 MixinEntitySmokeFX fx2 = (MixinEntitySmokeFX) fx;
                 fx2.setSmokeParticleScale(fx2.getSmokeParticleScale() * scale);
