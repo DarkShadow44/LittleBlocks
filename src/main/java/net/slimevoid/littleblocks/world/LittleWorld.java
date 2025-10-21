@@ -380,10 +380,10 @@ public abstract class LittleWorld extends World implements ILittleWorld {
     /**
      * Checks if the LittleWorld needs to be updated based on the parent
      * 'RealWorld'
-     * 
+     *
      * @param world
      *              The world to check
-     * 
+     *
      * @return outdated or not
      */
     public boolean isOutdated(World world) {
@@ -443,8 +443,7 @@ public abstract class LittleWorld extends World implements ILittleWorld {
             if (block.equals(ConfigurationLib.littleChunk)) {
                 TileEntityLittleChunk tile = (TileEntityLittleChunk) this.getParentWorld()
                     .getTileEntity(x >> 3, y >> 3, z >> 3);
-                Block littleBlock = tile.getBlock(x & 7, y & 7, z & 7);
-                return littleBlock != Blocks.air ? true : false;
+                return true;
             } else {
                 return false;
             }
