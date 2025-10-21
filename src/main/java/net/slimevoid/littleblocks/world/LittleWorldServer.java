@@ -161,14 +161,14 @@ public class LittleWorldServer extends WorldServer implements ILittleWorld {
 
     @Override
     public long getWorldTime() {
-        return super.getWorldTime(); // this.getLittleWorld() != null ? this.getLittleWorld().getWorldTime() :
-                                     // super.getWorldTime();
+        return this.getLittleWorld() != null ? this.getLittleWorld()
+            .getWorldTime() : super.getWorldTime();
     }
 
     @Override
     public long getTotalWorldTime() {
-        return super.getTotalWorldTime(); // this.getLittleWorld() != null ? this.getLittleWorld().getTotalWorldTime() :
-                                          // super.getTotalWorldTime();
+        return this.getLittleWorld() != null ? this.getLittleWorld()
+            .getTotalWorldTime() : super.getTotalWorldTime();
     }
 
     @Override
