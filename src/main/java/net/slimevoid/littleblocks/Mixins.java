@@ -10,7 +10,8 @@ public enum Mixins implements IMixins {
             "MixinTileEntityPiston",
             "MixinOpenGuiMessage",
             "MixinFMLNetworkHandler",
-            "MixinOpenGuiHandler")),
+            "MixinOpenGuiHandler",
+            "MixinTessellator")),
 
     GT5(new MixinBuilder().setPhase(Phase.LATE)
         .addRequiredMod(TargetedMod.GT5)

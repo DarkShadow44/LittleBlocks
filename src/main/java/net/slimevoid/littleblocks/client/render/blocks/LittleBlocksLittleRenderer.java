@@ -21,10 +21,7 @@ import net.minecraft.world.IBlockAccess;
 import net.slimevoid.library.data.Logger.LogLevel;
 import net.slimevoid.littleblocks.core.LoggerLittleBlocks;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
-import net.slimevoid.littleblocks.core.lib.CoreLib;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
+import net.slimevoid.mixin_interfaces.ITessellator;
 
 public class LittleBlocksLittleRenderer {
 
@@ -54,21 +51,12 @@ public class LittleBlocksLittleRenderer {
         if (this.littleBlocksToRender.isEmpty()) {
             return false;
         }
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.draw();
-        GL11.glPushMatrix();
-
         boolean hasRendered = false;
 
-        double xS = -((x >> 4) << 4), yS = -((y >> 4) << 4), zS = -((z >> 4) << 4);
+        float scale = 1.0f / ConfigurationLib.littleBlocksSize;
+        ITessellator tess = (ITessellator) Tessellator.instance;
+        tess.littleblocks$setScale(scale);
 
-        if (!CoreLib.OPTIFINE_INSTALLED) GL11.glTranslated(xS, yS, zS);
-        GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        float scale = 1 / (float) ConfigurationLib.littleBlocksSize;
-        GL11.glScalef(scale, scale, scale);
-        if (!CoreLib.OPTIFINE_INSTALLED) GL11.glTranslated(-xS, -yS, -zS);
-
-        tessellator.startDrawingQuads();
         for (LittleBlockToRender littleBlockToRender : this.littleBlocksToRender) {
             try {
                 if (this.renderBlocks.renderBlockByRenderType(
@@ -89,10 +77,7 @@ public class LittleBlocksLittleRenderer {
                         LogLevel.DEBUG);
             }
         }
-        tessellator.draw();
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-        GL11.glPopMatrix();
-        tessellator.startDrawingQuads();
+        tess.littleblocks$setScale(1);
         return hasRendered;
     }
 

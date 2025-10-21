@@ -13,7 +13,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 @Mixin(PosGuiData.class)
 public abstract class MixinPosGuiData implements IGuiData {
 
-    @Shadow
+    @Shadow(remap = false)
     @Final
     private int x, y, z;
 
