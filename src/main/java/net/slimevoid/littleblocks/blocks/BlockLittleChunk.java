@@ -562,18 +562,14 @@ public class BlockLittleChunk extends BlockContainer {
                     }
                 }
                 this.setBlockBoundsBasedOnSelection(world, x, y, z);
-                return new MovingObjectPosition(
-                    x,
-                    y,
-                    z,
-                    (byte) min.sideHit,
-                    /** ((Vec3) min.hitVec).addVector(x, y, z) **/
-                    hitVec = Vec3
-                        .createVectorHelper(
-                            (min.hitVec.xCoord * 8) % 1,
-                            (min.hitVec.yCoord * 8) % 1,
-                            (min.hitVec.zCoord * 8) % 1)
-                        .addVector(x, y, z));
+
+                min.hitVec.xCoord = (min.hitVec.xCoord * 8) % 1;
+                min.hitVec.yCoord = (min.hitVec.yCoord * 8) % 1;
+                min.hitVec.zCoord = (min.hitVec.zCoord * 8) % 1;
+                if (min.hitVec.xCoord == 0) min.hitVec.xCoord = 1;
+                if (min.hitVec.yCoord == 0) min.hitVec.yCoord = 1;
+                if (min.hitVec.zCoord == 0) min.hitVec.zCoord = 1;
+                return new MovingObjectPosition(x, y, z, (byte) min.sideHit, min.hitVec.addVector(x, y, z));
             }
         }
         xSelected = -10;
