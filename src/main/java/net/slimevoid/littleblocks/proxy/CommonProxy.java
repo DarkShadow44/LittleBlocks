@@ -19,6 +19,7 @@ import net.slimevoid.littleblocks.events.LittleChunkEvent;
 import net.slimevoid.littleblocks.events.WorldServerEvent;
 import net.slimevoid.littleblocks.tickhandlers.LittleWorldServerTickHandler;
 
+import codechicken.multipart.handler.MultipartSaveLoad;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
@@ -32,6 +33,7 @@ public class CommonProxy implements ILBCommonProxy {
     @Override
     public void init() {
         PacketLib.registerPacketHandlers();
+        TileEntity.addMapping(MultipartSaveLoad.TileNBTContainer.class, "multipart_dummy");
     }
 
     @Override

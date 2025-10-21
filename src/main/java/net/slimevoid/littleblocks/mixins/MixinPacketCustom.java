@@ -25,7 +25,7 @@ public abstract class MixinPacketCustom implements IPacketCustom {
     @Unique
     private boolean littleblocks$hasLittleWorld;
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract FMLProxyPacket toPacket();
 
     @WrapOperation(

@@ -7,13 +7,16 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.CoreLib;
+import net.slimevoid.littleblocks.tileentities.TileEntityLittleChunk;
 
 import com.mojang.authlib.GameProfile;
 
@@ -75,6 +78,15 @@ public class LittleWorldServerTickHandler {
     public void chunkUnWatch(ChunkWatchEvent.UnWatch watch) {
         if (watch.player instanceof FakePlayer) {
             return;
+        }
+    }
+
+    @SubscribeEvent
+    public void onChunkLoad(ChunkEvent.Load event) {
+        for (TileEntity tile : event.getChunk().chunkTileEntityMap.values()) {
+            if (tile instanceof TileEntityLittleChunk tileChunk) {
+                tileChunk.onChunkLoad();
+            }
         }
     }
 

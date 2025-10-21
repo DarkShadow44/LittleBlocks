@@ -1,6 +1,7 @@
 package net.slimevoid.littleblocks.world;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -9,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -24,6 +26,11 @@ public class LittleFakeChunk extends Chunk {
 
     public LittleFakeChunk(World world, int x, int z) {
         super(world, x, z);
+    }
+
+    public LittleFakeChunk(World world, int x, int z, Map<ChunkPosition, TileEntity> chunkTileEntityMap) {
+        super(world, x, z);
+        this.chunkTileEntityMap = chunkTileEntityMap;
     }
 
     @Override

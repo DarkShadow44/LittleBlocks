@@ -2,6 +2,7 @@ package net.slimevoid.littleblocks.world;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -49,6 +51,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public abstract class LittleWorld extends World implements ILittleWorld {
 
     private List addedTileEntityList = new ArrayList<TileEntity>();
+    private HashMap<ChunkCoordinates, TileEntity> allTileEntities = new HashMap<>();
     private boolean /* scanningTiles */ field_147481_N;
 
     /** Entities marked for removal. */
@@ -949,6 +952,9 @@ public abstract class LittleWorld extends World implements ILittleWorld {
                     loadedTileEntityList.add(tileentity);
                 }
             }
+
+            allTileEntities
+                .put(new ChunkCoordinates(tileentity.xCoord, tileentity.yCoord, tileentity.zCoord), tileentity);
             TileEntityLittleChunk tile = (TileEntityLittleChunk) this.getParentWorld()
                 .getTileEntity(x >> 3, y >> 3, z >> 3);
             if (tile != null) {
@@ -991,6 +997,7 @@ public abstract class LittleWorld extends World implements ILittleWorld {
         if (tile != null) {
             tile.removeTileEntity(x & 7, y & 7, z & 7);
         }
+        allTileEntities.remove(new ChunkCoordinates(x, y, z));
         this.func_147453_f(x, y, z, this.getBlock(x, y, z));
     }
 
@@ -1476,8 +1483,8 @@ public abstract class LittleWorld extends World implements ILittleWorld {
     }
 
     @Override
-    public List<TileEntity> getLoadedTileEntities() {
-        return this.loadedTileEntityList;
+    public HashMap<ChunkCoordinates, TileEntity> getAllTileEntities() {
+        return this.allTileEntities;
     }
 
     @Override

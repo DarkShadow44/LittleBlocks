@@ -1,7 +1,9 @@
 package net.slimevoid.littleblocks.world;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
@@ -12,6 +14,7 @@ import net.minecraft.profiler.Profiler;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IProgressUpdate;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
@@ -476,9 +479,9 @@ public class LittleWorldServer extends WorldServer implements ILittleWorld {
     }
 
     @Override
-    public List<TileEntity> getLoadedTileEntities() {
+    public HashMap<ChunkCoordinates, TileEntity> getAllTileEntities() {
         return this.getLittleWorld()
-            .getLoadedTileEntities();
+            .getAllTileEntities();
     }
 
     @Override
@@ -506,6 +509,13 @@ public class LittleWorldServer extends WorldServer implements ILittleWorld {
 
     @Override
     public Chunk getChunkFromChunkCoords(int x, int z) {
-        return new LittleFakeChunk(getLittleWorld(), x, z);
+        Map<ChunkPosition, TileEntity> chunkTileEntityMap = new HashMap<>();
+        for (TileEntity entity : getAllTileEntities().values()) {
+            if ((entity.xCoord >> 4) == x && (entity.zCoord >> 4) == z) {
+                chunkTileEntityMap
+                    .put(new ChunkPosition(entity.xCoord & 0xf, entity.yCoord, entity.zCoord & 0xf), entity);
+            }
+        }
+        return new LittleFakeChunk(getLittleWorld(), x, z, chunkTileEntityMap);
     }
 }

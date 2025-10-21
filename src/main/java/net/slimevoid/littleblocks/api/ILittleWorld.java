@@ -1,8 +1,9 @@
 package net.slimevoid.littleblocks.api;
 
-import java.util.List;
+import java.util.HashMap;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public interface ILittleWorld extends IBlockAccess {
 
     public void activeChunkPosition(ChunkPosition chunkposition, boolean forced);
 
-    public List<TileEntity> getLoadedTileEntities();
+    public HashMap<ChunkCoordinates, TileEntity> getAllTileEntities();
 
     public void addLoadedTileEntity(TileEntity tile);
 }

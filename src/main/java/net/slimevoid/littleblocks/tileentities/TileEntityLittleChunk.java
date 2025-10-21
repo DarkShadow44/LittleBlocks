@@ -28,6 +28,7 @@ import net.slimevoid.littleblocks.api.ILittleBlocks;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
+import net.slimevoid.littleblocks.world.LittleFakeChunk;
 
 import codechicken.multipart.TileMultipart;
 import codechicken.multipart.handler.MultipartSaveLoad;
@@ -822,6 +823,18 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
         if (block != null && block.getTickRandomly()) {
             block.updateTick((World) littleWorld, this.getX(x), this.getY(y), this.getZ(z), ((World) littleWorld).rand);
+        }
+    }
+
+    public Chunk getFakeChunk() {
+        return new LittleFakeChunk(worldObj, xCoord >> 4, zCoord >> 4, chunkTileEntityMap);
+    }
+
+    public void onChunkLoad() {
+        MultipartSaveLoad.loadTiles(getFakeChunk());
+
+        for (TileEntity tile : chunkTileEntityMap.values()) {
+            ((World) getLittleWorld()).setTileEntity(tile.xCoord, tile.yCoord, tile.zCoord, tile);
         }
     }
 }
