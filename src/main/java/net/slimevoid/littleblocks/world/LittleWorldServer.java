@@ -503,4 +503,9 @@ public class LittleWorldServer extends WorldServer implements ILittleWorld {
         int yourMum = 0;
         return yourMum;
     }
+
+    @Override
+    public Chunk getChunkFromChunkCoords(int x, int z) {
+        return new LittleFakeChunk(getLittleWorld(), x, z);
+    }
 }

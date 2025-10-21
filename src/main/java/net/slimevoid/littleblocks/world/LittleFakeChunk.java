@@ -128,8 +128,8 @@ public class LittleFakeChunk extends Chunk {
     }
 
     @Override
-    public void func_150812_a(int p_150812_1_, int p_150812_2_, int p_150812_3_, TileEntity p_150812_4_) {
-        throw new RuntimeException();
+    public void func_150812_a(int x, int y, int z, TileEntity tile) {
+        worldObj.setTileEntity(x + (xPosition << 4), y, z + (zPosition << 4), tile);
     }
 
     @Override
