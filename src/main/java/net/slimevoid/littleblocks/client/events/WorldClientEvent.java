@@ -47,7 +47,9 @@ public class WorldClientEvent {
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (ConfigurationLib.littleWorldClient != null) {
-            ConfigurationLib.littleWorldClient.updateEntities();
+            if (ConfigurationLib.littleWorldClient.getParentWorld() != null) {
+                ConfigurationLib.littleWorldClient.updateEntities();
+            }
         }
     }
 
