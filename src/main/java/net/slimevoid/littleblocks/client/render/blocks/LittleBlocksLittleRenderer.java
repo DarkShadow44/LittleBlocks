@@ -47,7 +47,7 @@ public class LittleBlocksLittleRenderer {
         }
     }
 
-    public boolean renderLittleBlocks(IBlockAccess iblockaccess, int x, int y, int z) {
+    public boolean renderLittleBlocks(IBlockAccess iblockaccess, int x, int y, int z, int pass) {
         if (this.littleBlocksToRender.isEmpty()) {
             return false;
         }
@@ -59,6 +59,7 @@ public class LittleBlocksLittleRenderer {
 
         for (LittleBlockToRender littleBlockToRender : this.littleBlocksToRender) {
             try {
+                littleBlockToRender.block.canRenderInPass(pass); // This updates global state in ForgeMultiPart...
                 if (this.renderBlocks.renderBlockByRenderType(
                     littleBlockToRender.block,
                     littleBlockToRender.x,
