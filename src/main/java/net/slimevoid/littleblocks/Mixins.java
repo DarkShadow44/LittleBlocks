@@ -14,7 +14,11 @@ public enum Mixins implements IMixins {
 
     GT5(new MixinBuilder().setPhase(Phase.LATE)
         .addRequiredMod(TargetedMod.GT5)
-        .addCommonMixins("MixinBaseMetaTileEntity", "MixinMetaTileEntityGuiHandler", "MixinGuiData"));
+        .addCommonMixins(
+            "MixinBaseMetaTileEntity",
+            "MixinMetaTileEntityGuiHandler",
+            "MixinGuiData",
+            "MixinPosGuiData"));
 
     private final MixinBuilder builder;
 
