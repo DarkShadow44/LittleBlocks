@@ -7,6 +7,7 @@ import net.minecraftforge.event.world.WorldEvent.Load;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 import net.slimevoid.littleblocks.world.LittleWorldClient;
+import net.slimevoid.littleblocks.world.LittleWorldMapping;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -41,6 +42,8 @@ public class WorldClientEvent {
                         .getTerrainType()),
                 world.difficultySetting.getDifficultyId(),
                 null);
+            ConfigurationLib.littleWorldClient.provider.dimensionId = LittleWorldMapping
+                .clientGetMapping(event.world.provider.dimensionId);
         }
     }
 

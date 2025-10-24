@@ -1,6 +1,7 @@
 package net.slimevoid.littleblocks.events;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldServer;
@@ -14,10 +15,12 @@ import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
+import net.slimevoid.littleblocks.world.LittleWorldMapping;
 import net.slimevoid.littleblocks.world.LittleWorldServer;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 public class WorldServerEvent {
 
@@ -34,6 +37,13 @@ public class WorldServerEvent {
                     DimensionManager.unregisterDimension(littleDimension);
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (!event.player.worldObj.isRemote) {
+            LittleWorldMapping.serverPlayerJoin((EntityPlayerMP) event.player);
         }
     }
 
@@ -56,6 +66,8 @@ public class WorldServerEvent {
             int littleDimension = ConfigurationLib.getLittleServerDimension(dimension);
 
             registerLittleWorldServer(world, dimension, littleDimension);
+
+            LittleWorldMapping.serverAddMapping(dimension, littleDimension);
         }
     }
 
