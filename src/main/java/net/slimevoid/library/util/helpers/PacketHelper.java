@@ -17,9 +17,9 @@ public class PacketHelper {
 
     /**
      * Register Listener for mod Channel
-     * 
+     *
      * Should be called in the Main class of the mod
-     * 
+     *
      * @param modChannel
      */
     public static void registerHandler(String modChannel, PacketPipeline handler) {

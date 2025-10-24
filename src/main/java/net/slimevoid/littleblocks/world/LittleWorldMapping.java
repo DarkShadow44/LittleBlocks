@@ -8,10 +8,12 @@ import net.slimevoid.library.util.helpers.PacketHelper;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 import net.slimevoid.littleblocks.network.packets.PacketLittleWorldMapping;
 
+import codechicken.ClientWorldMappingRegistry;
+
 public class LittleWorldMapping {
 
-    private static HashMap<Integer, Integer> dimensionMappingsClient = new HashMap<>();
-    private static HashMap<Integer, Integer> dimensionMappingsServer = new HashMap<>();
+    private static final HashMap<Integer, Integer> dimensionMappingsClient = new HashMap<>();
+    private static final HashMap<Integer, Integer> dimensionMappingsServer = new HashMap<>();
 
     public static int clientGetMapping(int originalId) {
         return dimensionMappingsClient.getOrDefault(originalId, 0);
@@ -39,5 +41,14 @@ public class LittleWorldMapping {
             packet.setIds(originalId, dimensionMappingsServer.get(originalId));
             PacketHelper.sendToPlayer(packet, player);
         }
+    }
+
+    public static void registerHandlers() {
+        ClientWorldMappingRegistry.registerHandler(id -> {
+            if (ConfigurationLib.littleWorldClient.provider.dimensionId == id) {
+                return ConfigurationLib.littleWorldClient;
+            }
+            return null;
+        });
     }
 }

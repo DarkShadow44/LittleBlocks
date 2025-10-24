@@ -20,10 +20,7 @@ public enum Mixins implements IMixins {
             "MixinBaseMetaTileEntity",
             "MixinMetaTileEntityGuiHandler",
             "MixinGuiData",
-            "MixinPosGuiData")),
-
-    MULTIPART(new MixinBuilder().setPhase(Phase.LATE)
-        .addCommonMixins("MixinMultipartCPH", "MixinPacketCustom"));
+            "MixinPosGuiData"));
 
     private final MixinBuilder builder;
 

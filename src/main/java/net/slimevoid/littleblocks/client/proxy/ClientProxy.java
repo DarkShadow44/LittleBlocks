@@ -23,6 +23,7 @@ import net.slimevoid.littleblocks.items.EntityItemLittleBlocksCollection;
 import net.slimevoid.littleblocks.proxy.CommonProxy;
 import net.slimevoid.littleblocks.tickhandlers.LittleWorldTickHandler;
 import net.slimevoid.littleblocks.tileentities.TileEntityLittleChunk;
+import net.slimevoid.littleblocks.world.LittleWorldMapping;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -38,6 +39,7 @@ public class ClientProxy extends CommonProxy {
     public void init() {
         super.init();
         PacketLib.registerClientPacketHandlers();
+        LittleWorldMapping.registerHandlers();
     }
 
     @Override
