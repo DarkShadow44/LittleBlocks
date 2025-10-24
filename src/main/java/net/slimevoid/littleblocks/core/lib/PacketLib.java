@@ -14,12 +14,14 @@ import net.slimevoid.littleblocks.client.network.packets.executors.ClientBlockEv
 import net.slimevoid.littleblocks.client.network.packets.executors.ClientCopierNotifyExecutor;
 import net.slimevoid.littleblocks.client.network.packets.executors.ClientLittleCollectionExecutor;
 import net.slimevoid.littleblocks.client.network.packets.executors.ClientPacketLittleBlocksLoginExecutor;
+import net.slimevoid.littleblocks.client.network.packets.executors.PacketLittleWorldMappingExecutor;
 import net.slimevoid.littleblocks.network.NetworkEvent;
 import net.slimevoid.littleblocks.network.handlers.PacketLittleBlockCollectionHandler;
 import net.slimevoid.littleblocks.network.handlers.PacketLittleBlockEventHandler;
 import net.slimevoid.littleblocks.network.handlers.PacketLittleBlockHandler;
 import net.slimevoid.littleblocks.network.handlers.PacketLittleBlocksHandler;
 import net.slimevoid.littleblocks.network.handlers.PacketLittleNotifyHandler;
+import net.slimevoid.littleblocks.network.handlers.PacketLittleWorldMappingHandler;
 import net.slimevoid.littleblocks.network.handlers.PacketLoginHandler;
 import net.slimevoid.littleblocks.network.packets.PacketLittleBlock;
 import net.slimevoid.littleblocks.network.packets.PacketLittleBlockChange;
@@ -61,6 +63,9 @@ public class PacketLib {
 
         handler.getPacketHandler(PACKETID_EVENT)
             .registerClientExecutor(CommandLib.BLOCK_EVENT, new ClientBlockEventExecutor());
+
+        handler.getPacketHandler(PacketIds.MAPPING)
+            .registerClientExecutor(CommandLib.MAPPING, new PacketLittleWorldMappingExecutor());
     }
 
     public static void registerPacketHandlers() {
@@ -84,6 +89,8 @@ public class PacketLib {
         handler.registerPacketHandler(PACKETID_EVENT, new PacketLittleBlockEventHandler());
 
         handler.registerPacketHandler(PacketIds.UPDATE, new PacketLittleBlocksHandler());
+
+        handler.registerPacketHandler(PacketIds.MAPPING, new PacketLittleWorldMappingHandler());
     }
 
     @SideOnly(Side.CLIENT)

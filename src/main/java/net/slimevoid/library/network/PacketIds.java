@@ -13,13 +13,13 @@ package net.slimevoid.library.network;
 
 /**
  * Packet ID list
- * 
+ *
  * LOGIN Packet ID for Login information UPDATE Packet ID for Basic Update
  * information GUI Packet ID for GUI update/open TILE Packet ID for TileEntity
  * information ENTITY Packet ID for Entity information
- * 
+ *
  * @author Eurymachus
- * 
+ *
  */
 public class PacketIds {
 
@@ -35,4 +35,5 @@ public class PacketIds {
     public static final int ENTITY = 4;
     // Packet ID for Player notification e.g. Client side messages
     public static final int PLAYER = 5;
+    public static final int MAPPING = 6;
 }

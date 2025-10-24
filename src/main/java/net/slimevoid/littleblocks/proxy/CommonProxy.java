@@ -74,6 +74,9 @@ public class CommonProxy implements ILBCommonProxy {
     public void registerEventHandlers() {
         MinecraftForge.EVENT_BUS.register(new LittleChunkEvent());
         MinecraftForge.EVENT_BUS.register(new WorldServerEvent());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new WorldServerEvent());
         MinecraftForge.EVENT_BUS.register(new LittleBlocksCollectionPickup());
         MinecraftForge.EVENT_BUS.register(new LittleContainerInteract());
     }
