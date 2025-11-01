@@ -116,7 +116,7 @@ public abstract class LittleWorld extends World implements ILittleWorld {
             .getGameRuleBooleanValue("doDaylightCycle")) {
             this.setWorldTime(this.getWorldTime() + 1L);
         }
-       // this.func_147456_g()/* tickBlocksAndAmbiance() */;
+        // this.func_147456_g()/* tickBlocksAndAmbiance() */;
     }
 
     /**

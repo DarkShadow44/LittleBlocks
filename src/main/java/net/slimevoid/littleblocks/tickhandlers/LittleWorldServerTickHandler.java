@@ -1,12 +1,9 @@
 package net.slimevoid.littleblocks.tickhandlers;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
@@ -32,7 +29,9 @@ public class LittleWorldServerTickHandler {
     @SubscribeEvent
     public void onServerTick(ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            Seq<EntityPlayerMP> players = JavaConverters.asScalaIteratorConverter(fakePlayerMap.values().iterator())
+            Seq<EntityPlayerMP> players = JavaConverters.asScalaIteratorConverter(
+                fakePlayerMap.values()
+                    .iterator())
                 .asScala()
                 .toSeq();
             MultipartSPH.onTickEnd(players);
