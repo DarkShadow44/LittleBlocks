@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.management.ItemInWorldManager;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -126,7 +127,8 @@ public class ItemInLittleWorldManager extends ItemInWorldManager {
 
         littleBlock.onBlockHarvested(this.theWorld, x, y, z, metadata, this.thisPlayerMP);
 
-        boolean blockIsRemoved = littleBlock.removedByPlayer(theWorld, thisPlayerMP, x, y, z, canHarvest);
+        EntityPlayer fakePlayer = LittleFakeEntityPlayer.makeForServer((WorldServer) theWorld, thisPlayerMP);
+        boolean blockIsRemoved = littleBlock.removedByPlayer(theWorld, fakePlayer, x, y, z, canHarvest);
 
         if (this.thisPlayerMP.getHeldItem() != null && this.thisPlayerMP.getHeldItem()
             .getItem() instanceof ItemLittleBlocksWand) {

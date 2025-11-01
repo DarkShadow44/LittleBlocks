@@ -210,7 +210,17 @@ public class LittlePlayerController extends PlayerControllerMP {
                                                                       */));
                 int metadata = littleWorld.getBlockMetadata(x, y, z);
 
-                boolean blockIsRemoved = littleBlock.removedByPlayer(littleWorld, mc.thePlayer, x, y, z);
+                PlayerControllerMP playerController = Minecraft.getMinecraft().playerController;
+                Minecraft.getMinecraft().playerController = new PlayerControllerMP(mc, mc.getNetHandler()) {
+
+                    @Override
+                    public float getBlockReachDistance() {
+                        return playerController.getBlockReachDistance() * 8;
+                    }
+                };
+                EntityPlayer fakePlayer = LittleFakeEntityPlayer.makeForClient(littleWorld, mc.thePlayer);
+                boolean blockIsRemoved = littleBlock.removedByPlayer(littleWorld, fakePlayer, x, y, z);
+                Minecraft.getMinecraft().playerController = playerController;
 
                 if (this.mc.thePlayer.getHeldItem() != null && this.mc.thePlayer.getHeldItem()
                     .getItem() instanceof ItemLittleBlocksWand) {
