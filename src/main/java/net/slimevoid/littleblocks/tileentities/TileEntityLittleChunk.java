@@ -32,7 +32,6 @@ import net.slimevoid.littleblocks.world.LittleFakeChunk;
 
 import codechicken.multipart.TileMultipart;
 import codechicken.multipart.handler.MultipartSaveLoad;
-import scala.Array;
 
 public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
@@ -635,15 +634,20 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
     List<NBTTagCompound> pendingBlockUpdates = new ArrayList<NBTTagCompound>();
 
+    private byte[] copyArray(byte[] arr) {
+        byte[] copy = new byte[arr.length];
+        System.arraycopy(arr, 0, copy, 0, arr.length);
+        return copy;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
         super.readFromNBT(nbttagcompound);
-        byte[] blockLSBArray = nbttagcompound.getByteArray("Blocks");
-        Array.copy(blockLSBArray, 0, this.blockLSBArray, 0, blockLSBArray.length);
+        this.blockLSBArray = copyArray(nbttagcompound.getByteArray("Blocks"));
         if (nbttagcompound.hasKey("Add", 7)) {
-            this.blockMSBArray = new NibbleArray(nbttagcompound.getByteArray("Add"), 4);
+            this.blockMSBArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Add")), 4);
         }
-        this.blockMetadataArray = new NibbleArray(nbttagcompound.getByteArray("Data"), 4);
+        this.blockMetadataArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Data")), 4);
         this.removeInvalidBlocks();
         // this.chunkTileEntityMap.clear();
         // this.tiles.clear();
