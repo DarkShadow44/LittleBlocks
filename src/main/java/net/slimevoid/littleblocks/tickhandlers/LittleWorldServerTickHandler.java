@@ -31,19 +31,11 @@ public class LittleWorldServerTickHandler {
 
     @SubscribeEvent
     public void onServerTick(ServerTickEvent event) {
-
-        List<EntityPlayerMP> players = new ArrayList<>();
-
-        players.addAll(fakePlayerMap.values());
-        players.addAll(
-            MinecraftServer.getServer()
-                .getConfigurationManager().playerEntityList);
-
         if (event.phase == TickEvent.Phase.END) {
-            Seq<EntityPlayerMP> players2 = JavaConverters.asScalaIteratorConverter(players.iterator())
+            Seq<EntityPlayerMP> players = JavaConverters.asScalaIteratorConverter(fakePlayerMap.values().iterator())
                 .asScala()
                 .toSeq();
-            MultipartSPH.onTickEnd(players2);
+            MultipartSPH.onTickEnd(players);
         }
     }
 
