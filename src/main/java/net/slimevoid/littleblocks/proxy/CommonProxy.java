@@ -12,6 +12,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.slimevoid.littleblocks.api.ILBCommonProxy;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.blocks.events.LittleContainerInteract;
+import net.slimevoid.littleblocks.client.handlers.LittleWorldClientTickHandler;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
 import net.slimevoid.littleblocks.core.lib.PacketLib;
 import net.slimevoid.littleblocks.events.LittleBlocksCollectionPickup;
@@ -68,6 +69,10 @@ public class CommonProxy implements ILBCommonProxy {
         FMLCommonHandler.instance()
             .bus()
             .register(new LittleWorldServerTickHandler());
+        MinecraftForge.EVENT_BUS.register(new LittleWorldClientTickHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new LittleWorldClientTickHandler());
     }
 
     @Override
