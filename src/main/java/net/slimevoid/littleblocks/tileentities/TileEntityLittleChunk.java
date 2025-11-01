@@ -32,6 +32,7 @@ import net.slimevoid.littleblocks.world.LittleFakeChunk;
 
 import codechicken.multipart.TileMultipart;
 import codechicken.multipart.handler.MultipartSaveLoad;
+import scala.Array;
 
 public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
@@ -637,7 +638,8 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
         super.readFromNBT(nbttagcompound);
-        this.blockLSBArray = nbttagcompound.getByteArray("Blocks");
+        byte[] blockLSBArray = nbttagcompound.getByteArray("Blocks");
+        Array.copy(blockLSBArray, 0, this.blockLSBArray, 0, blockLSBArray.length);
         if (nbttagcompound.hasKey("Add", 7)) {
             this.blockMSBArray = new NibbleArray(nbttagcompound.getByteArray("Add"), 4);
         }
