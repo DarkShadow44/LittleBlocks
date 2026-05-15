@@ -1,7 +1,6 @@
 package net.slimevoid.littleblocks.mixins;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityPiston;
@@ -34,17 +33,6 @@ public class MixinTileEntityPiston extends TileEntity {
     private void readFromNBT(NBTTagCompound compound, CallbackInfo ci) {
         if (compound.hasKey("shouldHeadBeRendered")) {
             shouldHeadBeRendered = compound.getBoolean("shouldHeadBeRendered");
-        }
-    }
-
-    @Inject(method = "updateEntity", at = @At("HEAD"))
-    public void updateEntity(CallbackInfo ci) {
-        if (this.progress >= 1.0F) {
-            if (this.worldObj.getBlock(this.xCoord, this.yCoord, this.zCoord) == Blocks.piston_extension) {
-                this.worldObj
-                    .setBlock(this.xCoord, this.yCoord, this.zCoord, this.storedBlock, this.storedMetadata, 11);
-                this.worldObj.notifyBlockOfNeighborChange(this.xCoord, this.yCoord, this.zCoord, this.storedBlock);
-            }
         }
     }
 }
