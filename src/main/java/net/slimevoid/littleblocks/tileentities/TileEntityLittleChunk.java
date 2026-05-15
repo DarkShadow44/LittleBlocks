@@ -612,14 +612,20 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
     List<NBTTagCompound> pendingBlockUpdates = new ArrayList<NBTTagCompound>();
 
+    private byte[] copyArray(byte[] arr) {
+        byte[] copy = new byte[arr.length];
+        System.arraycopy(arr, 0, copy, 0, arr.length);
+        return copy;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound nbttagcompound) {
         super.readFromNBT(nbttagcompound);
-        this.blockLSBArray = nbttagcompound.getByteArray("Blocks");
+        this.blockLSBArray = copyArray(nbttagcompound.getByteArray("Blocks"));
         if (nbttagcompound.hasKey("Add", 7)) {
-            this.blockMSBArray = new NibbleArray(nbttagcompound.getByteArray("Add"), 4);
+            this.blockMSBArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Add")), 4);
         }
-        this.blockMetadataArray = new NibbleArray(nbttagcompound.getByteArray("Data"), 4);
+        this.blockMetadataArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Data")), 4);
         this.removeInvalidBlocks();
         // this.chunkTileEntityMap.clear();
         // this.tiles.clear();
@@ -736,7 +742,7 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        this.readFromNBT(pkt.func_148857_g());
+        this.readDescriptionNBT(pkt.func_148857_g());
         this.markDirty();
         this.getWorldObj()
             .markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
@@ -745,9 +751,96 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
     @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound nbttagcompound = new NBTTagCompound();
-        this.writeToNBT(nbttagcompound);
-        Packet packet = new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbttagcompound);
-        return packet;
+        this.writeDescriptionNBT(nbttagcompound);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, nbttagcompound);
+    }
+
+    private void writeDescriptionNBT(NBTTagCompound nbttagcompound) {
+        super.writeToNBT(nbttagcompound);
+        nbttagcompound.setByteArray("Blocks", this.blockLSBArray);
+        if (this.blockMSBArray != null) {
+            nbttagcompound.setByteArray("Add", this.blockMSBArray.data);
+        }
+        nbttagcompound.setByteArray("Data", this.blockMetadataArray.data);
+
+        NBTTagList tilesTag = new NBTTagList();
+        for (TileEntity child : this.chunkTileEntityMap.values()) {
+            Packet descPacket;
+            try {
+                descPacket = child.getDescriptionPacket();
+            } catch (Exception e) {
+                SlimevoidCore.console(
+                    CoreLib.MOD_ID,
+                    "TileEntity " + child.getClass()
+                        .getName() + " threw building its description packet: " + e.getLocalizedMessage(),
+                    2);
+                continue;
+            }
+            if (!(descPacket instanceof S35PacketUpdateTileEntity)) {
+                continue;
+            }
+            NBTTagCompound desc = ((S35PacketUpdateTileEntity) descPacket).func_148857_g();
+            if (desc == null) {
+                continue;
+            }
+            desc.setInteger("x", child.xCoord);
+            desc.setInteger("y", child.yCoord);
+            desc.setInteger("z", child.zCoord);
+            tilesTag.appendTag(desc);
+        }
+        nbttagcompound.setTag("Tiles", tilesTag);
+    }
+
+    private void readDescriptionNBT(NBTTagCompound nbttagcompound) {
+        super.readFromNBT(nbttagcompound);
+        this.blockLSBArray = copyArray(nbttagcompound.getByteArray("Blocks"));
+        if (nbttagcompound.hasKey("Add", 7)) {
+            this.blockMSBArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Add")), 4);
+        }
+        this.blockMetadataArray = new NibbleArray(copyArray(nbttagcompound.getByteArray("Data")), 4);
+        this.removeInvalidBlocks();
+
+        NBTTagList tilesTag = nbttagcompound.getTagList("Tiles", 10);
+        if (tilesTag == null) {
+            return;
+        }
+        for (int i = 0; i < tilesTag.tagCount(); i++) {
+            NBTTagCompound desc = tilesTag.getCompoundTagAt(i);
+            int x = desc.getInteger("x");
+            int y = desc.getInteger("y");
+            int z = desc.getInteger("z");
+            int lx = x & 7;
+            int ly = y & 7;
+            int lz = z & 7;
+
+            TileEntity tile = this.chunkTileEntityMap.get(new ChunkPosition(lx, ly, lz));
+            if (tile == null || tile.isInvalid()) {
+                Block block = this.getBlockByExtId(lx, ly, lz);
+                int meta = this.getExtBlockMetadata(lx, ly, lz);
+                if (block == null || !block.hasTileEntity(meta)) {
+                    continue;
+                }
+                tile = block.createTileEntity((World) getLittleWorld(), meta);
+                if (tile == null) {
+                    continue;
+                }
+                tile.xCoord = x;
+                tile.yCoord = y;
+                tile.zCoord = z;
+                this.addTileEntity(tile);
+            }
+
+            S35PacketUpdateTileEntity pkt = new S35PacketUpdateTileEntity(x, y, z, 0, desc);
+            try {
+                tile.onDataPacket(null, pkt);
+            } catch (Exception e) {
+                SlimevoidCore.console(
+                    CoreLib.MOD_ID,
+                    "TileEntity " + tile.getClass()
+                        .getName() + " threw applying its description packet: " + e.getLocalizedMessage(),
+                    2);
+            }
+        }
     }
 
     public void rotateContents(ForgeDirection axis) {
