@@ -1,5 +1,6 @@
 package net.slimevoid.littleblocks.core;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -41,7 +42,7 @@ public class LBCore {
         ConfigurationLib.littleChunk = new BlockLittleChunk(
             ConfigurationLib.littleChunkID,
             TileEntityLittleChunk.class,
-            Material.wood,
+            new Material(MapColor.stoneColor),
             2F,
             true).setBlockName(BlockLib.LITTLECHUNK);
 
