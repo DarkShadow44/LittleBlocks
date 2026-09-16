@@ -18,7 +18,7 @@ public class LittleFakeEntityPlayer {
         target.posY = source.posY * 8;
         target.posZ = source.posZ * 8;
         target.rotationYaw = source.rotationYaw;
-        target.prevRotationYaw = source.rotationYaw;
+        target.prevRotationYaw = source.prevRotationYaw;
         target.rotationPitch = source.rotationPitch;
         target.prevRotationPitch = source.prevRotationPitch;
     }
