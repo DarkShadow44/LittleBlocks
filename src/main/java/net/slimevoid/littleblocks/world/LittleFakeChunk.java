@@ -130,8 +130,8 @@ public class LittleFakeChunk extends Chunk {
     }
 
     @Override
-    public void addTileEntity(TileEntity p_150813_1_) {
-        throw new RuntimeException();
+    public void addTileEntity(TileEntity tile) {
+        func_150812_a(tile.xCoord & 15, tile.yCoord, tile.zCoord & 15, tile);
     }
 
     @Override
