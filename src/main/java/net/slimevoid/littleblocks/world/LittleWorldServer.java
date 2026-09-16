@@ -1,7 +1,9 @@
 package net.slimevoid.littleblocks.world;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.command.IEntitySelector;
@@ -30,6 +32,7 @@ import net.minecraft.world.storage.ISaveHandler;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.slimevoid.littleblocks.api.ILittleWorld;
+import net.slimevoid.littleblocks.tileentities.TileEntityLittleChunk;
 
 public class LittleWorldServer extends WorldServer implements ILittleWorld {
 
@@ -506,6 +509,27 @@ public class LittleWorldServer extends WorldServer implements ILittleWorld {
 
     @Override
     public Chunk getChunkFromChunkCoords(int x, int z) {
-        return new LittleFakeChunk(getLittleWorld(), x, z);
+        Map<ChunkPosition, TileEntity> chunkTileEntityMap = new HashMap<>();
+        Chunk parentChunk = getParentWorld().getChunkFromChunkCoords(x >> 3, z >> 3);
+
+        for (TileEntity parentTile : parentChunk.chunkTileEntityMap.values()) {
+            if (!(parentTile instanceof TileEntityLittleChunk)) {
+                continue;
+            }
+
+            TileEntityLittleChunk littleChunk = (TileEntityLittleChunk) parentTile;
+            if ((littleChunk.xCoord >> 1) != x || (littleChunk.zCoord >> 1) != z) {
+                continue;
+            }
+
+            for (TileEntity child : littleChunk.getTileEntityList()) {
+                if (child != null && !child.isInvalid()) {
+                    chunkTileEntityMap
+                        .put(new ChunkPosition(child.xCoord & 0xf, child.yCoord, child.zCoord & 0xf), child);
+                }
+            }
+        }
+
+        return new LittleFakeChunk(getLittleWorld(), x, z, chunkTileEntityMap);
     }
 }
