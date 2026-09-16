@@ -1,10 +1,10 @@
 package net.slimevoid.littleblocks.tickhandlers;
 
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.DimensionManager;
-import net.slimevoid.littleblocks.api.ILittleWorld;
-import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.world.ChunkWatchEvent;
+import net.slimevoid.littleblocks.compat.LittleChunkWatchMap;
+import net.slimevoid.littleblocks.core.LittleBlocks;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
@@ -14,28 +14,32 @@ public class LittleWorldServerTickHandler {
 
     @SubscribeEvent
     public void onServerTick(ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.START) {
-            WorldServer[] worlds = DimensionManager.getWorlds();
-            if (worlds != null && worlds.length > 0) {
-                for (World world : worlds) {
-                    if (world != null && !world.isRemote && !(world instanceof ILittleWorld)) {
-                        int dimension = world.provider.dimensionId;
-                        if (!ConfigurationLib.littleWorldServer.containsKey(dimension)) {
-                            System.out.println("WARNING! No LittleWorld loaded for Dimension " + dimension);
-                        } else {
-                            /*
-                             * LittleWorldServer worldServer =
-                             * (LittleWorldServer) DimensionManager
-                             * .getWorld(LBCore
-                             * .littleWorldServer.get(dimension)); if
-                             * (worldServer != null) { worldServer.littleTick();
-                             * worldServer.updateLittleEntities(); }
-                             */
-                        }
-                    }
-                }
-            }
+        if (event.phase == TickEvent.Phase.END && LittleBlocks.forgeMultipartCompat != null) {
+            LittleBlocks.forgeMultipartCompat.runEndTick();
         }
     }
 
+    @SubscribeEvent
+    public void chunkWatch(ChunkWatchEvent.Watch watch) {
+        if (watch.player instanceof FakePlayer) {
+            return;
+        }
+        LittleChunkWatchMap.watchChunk(watch.player, watch.chunk);
+        if (LittleBlocks.forgeMultipartCompat != null) {
+            Chunk chunk = watch.player.worldObj.getChunkFromChunkCoords(watch.chunk.chunkXPos, watch.chunk.chunkZPos);
+            LittleBlocks.forgeMultipartCompat.chunkWatch(watch.player, chunk);
+        }
+    }
+
+    @SubscribeEvent
+    public void chunkUnWatch(ChunkWatchEvent.UnWatch watch) {
+        if (watch.player instanceof FakePlayer) {
+            return;
+        }
+        LittleChunkWatchMap.unWatchChunk(watch.player, watch.chunk);
+        if (LittleBlocks.forgeMultipartCompat != null) {
+            Chunk chunk = watch.player.worldObj.getChunkFromChunkCoords(watch.chunk.chunkXPos, watch.chunk.chunkZPos);
+            LittleBlocks.forgeMultipartCompat.chunkUnWatch(watch.player, chunk);
+        }
+    }
 }

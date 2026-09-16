@@ -19,6 +19,7 @@ import net.slimevoid.littleblocks.events.LittleBlocksCollectionPickup;
 import net.slimevoid.littleblocks.events.LittleChunkEvent;
 import net.slimevoid.littleblocks.events.WorldServerEvent;
 import net.slimevoid.littleblocks.tickhandlers.LittleWorldServerTickHandler;
+import net.slimevoid.littleblocks.world.LittleWorldMapping;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -33,6 +34,8 @@ public class CommonProxy implements ILBCommonProxy {
     @Override
     public void init() {
         PacketLib.registerPacketHandlers();
+        // Both sides: the server derives a world's address when sending multipart packets, not just the client.
+        LittleWorldMapping.registerHandlers();
     }
 
     @Override
@@ -64,6 +67,9 @@ public class CommonProxy implements ILBCommonProxy {
     @Override
     public void registerTickHandlers() {
         MinecraftForge.EVENT_BUS.register(new LittleWorldServerTickHandler());
+        FMLCommonHandler.instance()
+            .bus()
+            .register(new LittleWorldServerTickHandler());
         MinecraftForge.EVENT_BUS.register(new LittleWorldClientTickHandler());
         FMLCommonHandler.instance()
             .bus()

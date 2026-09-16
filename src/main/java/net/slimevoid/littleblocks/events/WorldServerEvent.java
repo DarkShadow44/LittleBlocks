@@ -14,7 +14,9 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import net.slimevoid.littleblocks.api.ILittleWorld;
+import net.slimevoid.littleblocks.compat.LittleChunkWatchMap;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
+import net.slimevoid.littleblocks.world.LittleFakeEntityPlayer;
 import net.slimevoid.littleblocks.world.LittleWorldMapping;
 import net.slimevoid.littleblocks.world.LittleWorldServer;
 
@@ -26,6 +28,8 @@ public class WorldServerEvent {
 
     @SubscribeEvent
     public void onWorldUnload(Unload event) {
+        LittleChunkWatchMap.onWorldUnload(event.world);
+        LittleFakeEntityPlayer.onWorldUnload(event.world);
         if (event.world instanceof WorldServer && !(event.world instanceof ILittleWorld)) {
             WorldServer world = (WorldServer) event.world;
             int dimension = world.provider.dimensionId;
@@ -44,6 +48,14 @@ public class WorldServerEvent {
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.player.worldObj.isRemote) {
             LittleWorldMapping.serverPlayerJoin((EntityPlayerMP) event.player);
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (!event.player.worldObj.isRemote) {
+            LittleChunkWatchMap.onPlayerLogout((EntityPlayerMP) event.player);
+            LittleFakeEntityPlayer.onPlayerLogout((EntityPlayerMP) event.player);
         }
     }
 

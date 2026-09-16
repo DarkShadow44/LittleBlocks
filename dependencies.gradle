@@ -34,6 +34,16 @@
  * For more details, see https://docs.gradle.org/8.0.1/userguide/java_library_plugin.html#sec:java_library_configurations_graph
  */
 dependencies {
-    //runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.69-GTNH:dev")
-    api("com.github.GTNewHorizons:GT5-Unofficial:5.09.52.61:dev")
+    implementation("com.github.GTNewHorizons:NotEnoughItems:2.7.91-GTNH:dev") { transitive = false }
+    compileOnly("com.github.GTNewHorizons:GT5-Unofficial:5.09.52.61:dev") {
+        exclude group: "com.github.GTNewHorizons", module: "CodeChickenLib"
+    }
+    api("com.github.GTNewHorizons:ProjectRed:4.12.43-GTNH:dev") {
+        // ProjectRed drags in the published ForgeMultipart, which would outrank the local 9.9.9 on the
+        // runtime classpath and leave the world-addressing changes out of the game.
+        exclude group: "com.github.GTNewHorizons", module: "ForgeMultipart"
+    }
+    api("com.github.GTNewHorizons:CodeChickenCore:1.4.20:dev")
+    api("com.github.GTNewHorizons:ForgeMultipart:9.9.9:dev")
+    api("com.github.GTNewHorizons:GTNHLib:9.9.9:dev")
 }

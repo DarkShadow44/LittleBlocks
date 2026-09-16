@@ -1,17 +1,54 @@
 package net.slimevoid.littleblocks.world;
 
+import java.util.HashMap;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
+import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.CoreLib;
 
 import com.mojang.authlib.GameProfile;
 
 public class LittleFakeEntityPlayer {
+
+    private static final HashMap<EntityPlayerMP, EntityPlayerMP> fakePlayerMap = new HashMap<>();
+
+    public static EntityPlayerMP getFakePlayer(EntityPlayerMP player) {
+        WorldServer littleWorld = (WorldServer) LittleBlocks.proxy.getLittleWorld(player.worldObj, false);
+        EntityPlayerMP fakePlayer = fakePlayerMap.get(player);
+        if (fakePlayer == null || fakePlayer.worldObj != littleWorld) {
+            fakePlayer = createFakePlayer(player, littleWorld);
+            fakePlayerMap.put(player, fakePlayer);
+        }
+        return fakePlayer;
+    }
+
+    public static Iterable<EntityPlayerMP> getFakePlayers() {
+        return fakePlayerMap.values();
+    }
+
+    public static void onPlayerLogout(EntityPlayerMP player) {
+        fakePlayerMap.remove(player);
+    }
+
+    public static void onWorldUnload(World world) {
+        fakePlayerMap.entrySet().removeIf(entry -> entry.getKey().worldObj == world || entry.getValue().worldObj == world);
+    }
+
+    private static EntityPlayerMP createFakePlayer(EntityPlayerMP player, WorldServer littleWorld) {
+        EntityPlayerMP fakePlayer = new FakePlayer(littleWorld, new GameProfile(null, CoreLib.MOD_CHANNEL));
+        fakePlayer.playerNetServerHandler = new NetHandlerPlayServer(
+            player.mcServer,
+            player.playerNetServerHandler.netManager,
+            player);
+        return fakePlayer;
+    }
 
     private static void copyValues(EntityPlayer target, EntityPlayer source) {
         target.posX = source.posX * 8;

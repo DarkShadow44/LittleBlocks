@@ -35,6 +35,7 @@ import net.slimevoid.library.util.helpers.SlimevoidHelper;
 import net.slimevoid.littleblocks.api.ILittleWorld;
 import net.slimevoid.littleblocks.blocks.core.CollisionRayTrace;
 import net.slimevoid.littleblocks.client.render.entities.LittleBlockDiggingFX;
+import net.slimevoid.littleblocks.compat.LittleChunkWatchMap;
 import net.slimevoid.littleblocks.core.LittleBlocks;
 import net.slimevoid.littleblocks.core.lib.BlockUtil;
 import net.slimevoid.littleblocks.core.lib.ConfigurationLib;
@@ -363,6 +364,18 @@ public class BlockLittleChunk extends BlockContainer {
 
     public void dropLittleBlockAsItem_do(World world, int x, int y, int z, ItemStack itemStack) {
         this.dropBlockAsItem(world, x, y, z, itemStack);
+    }
+
+    @Override
+    public void onBlockAdded(World world, int x, int y, int z) {
+        super.onBlockAdded(world, x, y, z);
+        LittleChunkWatchMap.onLittleChunkAdded(world, x, z);
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
+        super.breakBlock(world, x, y, z, block, metadata);
+        LittleChunkWatchMap.onLittleChunkRemoved(world, x, z);
     }
 
     @Override
