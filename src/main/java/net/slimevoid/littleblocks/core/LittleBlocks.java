@@ -2,9 +2,11 @@ package net.slimevoid.littleblocks.core;
 
 import net.slimevoid.library.util.helpers.PacketHelper;
 import net.slimevoid.littleblocks.api.ILBCommonProxy;
+import net.slimevoid.littleblocks.compat.ForgeMultipartCompat;
 import net.slimevoid.littleblocks.core.lib.CoreLib;
 import net.slimevoid.littleblocks.core.lib.PacketLib;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -26,11 +28,16 @@ public class LittleBlocks {
     @Instance(CoreLib.MOD_ID)
     public static LittleBlocks instance;
 
+    public static ForgeMultipartCompat forgeMultipartCompat;
+
     @EventHandler
     public void LittleBlocksPreInit(FMLPreInitializationEvent event) {
         proxy.registerConfigurationProperties(event.getSuggestedConfigurationFile());
         proxy.preInit();
         LBInit.preInitialize();
+        if (Loader.isModLoaded("ForgeMultipart")) {
+            forgeMultipartCompat = new ForgeMultipartCompat();
+        }
     }
 
     @EventHandler

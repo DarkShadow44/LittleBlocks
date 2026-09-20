@@ -32,8 +32,14 @@ public class WorldServerEvent {
 
             if (ConfigurationLib.littleWorldServer.containsKey(dimension)) {
                 int littleDimension = ConfigurationLib.littleWorldServer.remove(dimension);
+
+                // A LittleWorld receives no unload event of its own, but mods keep state keyed by world —
+                // ForgeMultipart's watcher and update maps among them — so one is emitted here.
+                WorldServer littleWorldServer = LittleWorldMapping.serverRemoveWorld(dimension);
+                if (littleWorldServer != null) {
+                    MinecraftForge.EVENT_BUS.post(new WorldEvent.Unload(littleWorldServer));
+                }
                 if (DimensionManager.isDimensionRegistered(littleDimension)) {
-                    DimensionManager.setWorld(littleDimension, null);
                     DimensionManager.unregisterDimension(littleDimension);
                 }
             }
@@ -101,6 +107,7 @@ public class WorldServerEvent {
                 littleDimension,
                 worldSettings,
                 null);
+            LittleWorldMapping.serverAddWorld(dimension, littleWorldServer);
             MinecraftForge.EVENT_BUS.post(new WorldEvent.Load(littleWorldServer));
 
             // System.out.println("WorldServer Loaded: "

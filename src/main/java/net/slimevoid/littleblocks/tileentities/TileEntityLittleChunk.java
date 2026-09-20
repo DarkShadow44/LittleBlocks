@@ -483,6 +483,9 @@ public class TileEntityLittleChunk extends TileEntity implements ILittleBlocks {
 
     protected void setLittleWorldObjs() {
         ILittleWorld littleWorld = this.getLittleWorld();
+        if (LittleBlocks.forgeMultipartCompat != null) {
+            LittleBlocks.forgeMultipartCompat.loadTiles((World) littleWorld, chunkTileEntityMap);
+        }
         Iterator tiles = this.chunkTileEntityMap.values()
             .iterator();
         while (tiles.hasNext()) {

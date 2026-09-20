@@ -18,6 +18,7 @@ import net.slimevoid.littleblocks.core.lib.PacketLib;
 import net.slimevoid.littleblocks.events.LittleBlocksCollectionPickup;
 import net.slimevoid.littleblocks.events.LittleChunkEvent;
 import net.slimevoid.littleblocks.events.WorldServerEvent;
+import net.slimevoid.littleblocks.world.LittleWorldMapping;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -32,6 +33,8 @@ public class CommonProxy implements ILBCommonProxy {
     @Override
     public void init() {
         PacketLib.registerPacketHandlers();
+        // Both sides: the server derives a world's address when sending multipart packets, not just the client.
+        LittleWorldMapping.registerHandlers();
     }
 
     @Override
@@ -85,7 +88,7 @@ public class CommonProxy implements ILBCommonProxy {
         if (world != null) {
             int dimension = world.provider.dimensionId;
             if (ConfigurationLib.littleWorldServer.containsKey(dimension)) {
-                World littleWorld = DimensionManager.getWorld(ConfigurationLib.littleWorldServer.get(dimension));
+                World littleWorld = LittleWorldMapping.getServerLittleWorld(world);
                 if (littleWorld == null) {
                     throw new NullPointerException(
                         "A LittleWorld does not exist for reference world - " + world.getWorldInfo()
